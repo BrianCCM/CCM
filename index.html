@@ -1343,6 +1343,17 @@
       outline-offset: 3px;
     }
 
+    /* Disable aurora animation on mobile/tablet to prevent iOS reflow */
+    @media (max-width: 1024px) {
+      .aurora-layer {
+        animation: none;
+        background-position: 50% 50%;
+      }
+      .aurora-layer::after {
+        animation: none;
+      }
+    }
+
     /* ══ RESPONSIVE ══ */
     @media (max-width: 1024px) {
       .why-grid      { grid-template-columns: 1fr; gap: 3rem; }
