@@ -2163,7 +2163,10 @@
 
     // ── Text Rotate Hero ──
     (function() {
-      const words = ["rocks", "pays you", "matters", "delivers", "makes a difference"];
+      const isMobile = window.matchMedia("(max-width: 1024px)").matches;
+      const words = isMobile
+        ? ["rocks", "pays you", "matters", "delivers", "works"]
+        : ["rocks", "pays you", "matters", "delivers", "makes a difference"];
       const STAGGER = 0.028; // seconds between each character
       const INTERVAL = 2600; // ms between rotations
 
