@@ -1271,6 +1271,32 @@
       margin: 0;
     }
 
+    /* ══ SERVICE AREA ══ */
+    .service-area-section {
+      background: var(--sand);
+      border-top: 1px solid rgba(31,42,48,0.07);
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    .city-tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-top: 1.5rem;
+    }
+    .city-tags span {
+      background: rgba(182,61,43,0.09);
+      border: 1px solid rgba(182,61,43,0.22);
+      color: var(--red-dk);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      padding: 0.4rem 0.9rem;
+      border-radius: 100px;
+    }
+
     /* ══ CTA BANNER ══ */
     .cta-section {
       background: var(--red);
@@ -1798,6 +1824,27 @@
     </div>
   </section>
 
+  <!-- ══ SERVICE AREA ══ -->
+  <section class="service-area-section">
+    <div style="max-width:760px; margin:0 auto;">
+      <p class="section-label">Our Service Area</p>
+      <h2 class="section-title" style="font-size:clamp(1.7rem,3vw,2.4rem); margin-bottom:1rem;">Serving Businesses Across Southern Utah</h2>
+      <p style="color:rgba(31,42,48,0.6); line-height:1.75; max-width:600px; margin:0 auto 0.5rem;">
+        We're a local team based in <strong>Cedar City, UT</strong> — and we work exclusively with businesses in Southern Utah. Whether you're on Main Street in Cedar City or running a growing operation in St. George, we know your market, your customers, and what it takes to win here.
+      </p>
+      <div class="city-tags">
+        <span>Cedar City, UT</span>
+        <span>St. George, UT</span>
+        <span>Washington City, UT</span>
+        <span>Hurricane, UT</span>
+        <span>Parowan, UT</span>
+        <span>Enoch, UT</span>
+        <span>Kanab, UT</span>
+        <span>Beaver, UT</span>
+      </div>
+    </div>
+  </section>
+
   <!-- ══ CTA BANNER ══ -->
   <section class="cta-section" id="contact">
     <div class="cta-inner">
@@ -1899,7 +1946,7 @@
     </svg>
     <div class="fcb-avatar">
       <div class="fcb-avatar-inner">
-        <img src="brand_assets/Untitled design-19.png" alt="Consultant" />
+        <img src="brand_assets/Untitled design-19.png" alt="Book a free strategy call with Cedar City Marketing" />
       </div>
     </div>
   </button>
