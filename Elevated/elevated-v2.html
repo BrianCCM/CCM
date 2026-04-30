@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Elevated Construction — Luxury Custom Homes in Southern Utah</title>
+<title>Elevated Construction | Luxury Custom Homes in Southern Utah</title>
 <meta name="robots" content="noindex, nofollow">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,7 +26,7 @@
 </script>
 
 <style>
-  html, body { background: #2a3854; }
+  html, body { background: #364e7e; }
   body {
     font-family: 'Inter', sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -36,7 +36,7 @@
 
   /* ===== Liquid glass ===== */
   .liquid-glass {
-    background: rgba(30, 42, 64, 0.5);
+    background: rgba(54, 78, 126, 0.5);
     background-blend-mode: luminosity;
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
@@ -63,11 +63,11 @@
 
   /* ===== Logo ===== */
   .logo-img {
-    height: 34px;
+    height: 44px;
     width: auto;
     display: block;
   }
-  @media (min-width: 768px) { .logo-img { height: 38px; } }
+  @media (min-width: 768px) { .logo-img { height: 52px; } }
 
   /* ===== Focus-visible ===== */
   a:focus-visible, button:focus-visible {
@@ -91,7 +91,6 @@
     object-position: center center;
   }
 
-  /* Overlay: navy tint darkens the video enough for text, preserves color story */
   .video-overlay {
     position: absolute;
     inset: 0;
@@ -125,13 +124,7 @@
 
   /* =========================================================
      ROTATING GRADIENT BUTTON
-     Translates the React GradientButton component:
-       - outer ring = rotating conic-gradient
-       - inner fill  = dark background (like after:inset-[5px])
-       - text sits above both on z-index
      ========================================================= */
-
-  /* Animate the --angle custom property (CSS Houdini) */
   @property --btn-angle {
     syntax: '<angle>';
     initial-value: 0deg;
@@ -150,7 +143,6 @@
     padding: 5px;
     cursor: pointer;
     text-decoration: none;
-    /* conic-gradient rotates via --btn-angle */
     background: conic-gradient(
       from var(--btn-angle) at 50% 50%,
       #c2b067 0%,
@@ -160,7 +152,6 @@
       #c2b067 100%
     );
     animation: spin-btn 3s linear infinite;
-    /* Fallback glow for browsers without @property support */
     box-shadow:
       0 0 22px rgba(194,176,103,0.40),
       0 0 50px rgba(194,176,103,0.18);
@@ -174,7 +165,6 @@
   }
   .gradient-btn:active { transform: translateY(0); }
 
-  /* Inner dark fill — the "after:inset-[5px] after:bg-background" from the component */
   .gradient-btn-inner {
     position: relative;
     z-index: 2;
@@ -195,7 +185,6 @@
     background: #1e2e4e;
   }
 
-  /* Fallback: for browsers that don't support @property, use pseudo-element rotation */
   @supports not (background: conic-gradient(from 1deg, red, blue)) {
     .gradient-btn {
       background: linear-gradient(135deg, #c2b067, #4a6090, #c2b067);
@@ -203,7 +192,7 @@
     }
   }
 
-  /* ===== Testimonials ===== */
+  /* ===== Testimonials (3-col infinite scroll) ===== */
   .testimonials {
     background: #f5efe4;
     color: #1a1a1a;
@@ -290,10 +279,481 @@
   .t-avatar { width: 2.5rem; height: 2.5rem; border-radius: 9999px; object-fit: cover; flex-shrink: 0; }
   .t-name { font-weight: 500; letter-spacing: -0.01em; line-height: 1.25; color: #1a1a1a; font-size: 0.95rem; }
   .t-role { line-height: 1.25; color: #5a5550; font-size: 0.85rem; letter-spacing: -0.005em; margin-top: 0.15rem; }
+
+  /* =========================================================
+     SHARED CONTAINER
+     ========================================================= */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  @media (min-width: 768px) { .container { padding: 0 3rem; } }
+  @media (min-width: 1024px) { .container { padding: 0 4rem; } }
+
+  /* =========================================================
+     PORTFOLIO CARDS
+     ========================================================= */
+  #portfolio {
+    background: #263d68;
+    padding: 5rem 0 6rem;
+  }
+  @media (min-width: 1024px) { #portfolio { padding: 7rem 0 8rem; } }
+
+  .p-header { text-align: center; margin-bottom: 3.5rem; }
+
+  .p-pill {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    border: 1px solid rgba(194, 176, 103, 0.5);
+    border-radius: 9999px;
+    color: #c2b067;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .p-title {
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    color: #fff;
+  }
+  .p-sub {
+    margin-top: 1rem;
+    color: rgba(255,255,255,0.55);
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  @media (min-width: 768px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .cards-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .home-card {
+    background: rgba(18, 34, 62, 0.92);
+    border: 1px solid rgba(194, 176, 103, 0.14);
+    border-radius: 1.25rem;
+    overflow: hidden;
+    transition: transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 420ms cubic-bezier(0.34, 1.56, 0.64, 1),
+                border-color 280ms ease;
+    will-change: transform;
+    display: block;
+    text-decoration: none;
+  }
+  .home-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(194, 176, 103, 0.42);
+    box-shadow:
+      0 4px 8px rgba(0,0,0,0.25),
+      0 24px 48px rgba(0,0,0,0.45),
+      0 0 0 1px rgba(194,176,103,0.08);
+  }
+  .home-card:focus-visible {
+    outline: 2px solid #c2b067;
+    outline-offset: 3px;
+    border-radius: 1.25rem;
+  }
+
+  .card-img-wrap {
+    position: relative;
+    height: 260px;
+    overflow: hidden;
+  }
+  .card-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+  .home-card:hover .card-photo { transform: scale(1.06); }
+
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+      rgba(0,0,0,0.82) 0%,
+      rgba(0,0,0,0.38) 42%,
+      rgba(0,0,0,0.06) 72%,
+      transparent 100%);
+  }
+  .card-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.25rem 1.5rem;
+  }
+  .card-name {
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    color: #fff;
+    line-height: 1.2;
+  }
+
+  .card-body { padding: 1.25rem 1.5rem 1.5rem; }
+
+  .card-specs {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.72);
+    margin-bottom: 0.4rem;
+  }
+  .spec-dot { color: rgba(194,176,103,0.45); font-size: 0.7rem; }
+
+  .card-garage {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.42);
+    margin-bottom: 0.6rem;
+  }
+
+  .card-amenities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.4rem;
+  }
+  .amenity-pill {
+    display: inline-block;
+    padding: 0.18rem 0.6rem;
+    border: 1px solid rgba(194,176,103,0.28);
+    border-radius: 9999px;
+    font-size: 0.68rem;
+    color: #c2b067;
+    letter-spacing: 0.02em;
+  }
+
+  .card-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.07);
+    margin: 1rem 0 0.9rem;
+  }
+
+  .card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #c2b067;
+    transition: gap 200ms ease;
+  }
+  .card-cta:hover { gap: 0.65rem; }
+
+  .portfolio-footer {
+    text-align: center;
+    margin-top: 3.5rem;
+  }
+  .see-all-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid rgba(194,176,103,0.45);
+    color: #c2b067;
+    padding: 0.8rem 2.25rem;
+    border-radius: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background 200ms ease, border-color 200ms ease;
+  }
+  .see-all-btn:hover {
+    background: rgba(194,176,103,0.1);
+    border-color: rgba(194,176,103,0.75);
+  }
+  .see-all-btn:focus-visible {
+    outline: 2px solid #c2b067;
+    outline-offset: 3px;
+    border-radius: 0.75rem;
+  }
+
+  /* =========================================================
+     CONTACT SECTION
+     ========================================================= */
+  #contact {
+    background: #263d68;
+    padding: 5rem 0 6rem;
+  }
+  @media (min-width: 1024px) { #contact { padding: 7rem 0 8rem; } }
+
+  .c-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (min-width: 768px) { .c-grid { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+  @media (min-width: 1024px) { .c-grid { grid-template-columns: 5fr 7fr; gap: 5rem; } }
+
+  .c-pill {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    border: 1px solid rgba(194,176,103,0.5);
+    border-radius: 9999px;
+    color: #c2b067;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .c-title {
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+  .c-sub {
+    color: rgba(255,255,255,0.52);
+    font-size: 1rem;
+    line-height: 1.65;
+    margin-bottom: 2.5rem;
+  }
+  .c-trust {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .c-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.4;
+  }
+  .c-trust-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #c2b067;
+    flex-shrink: 0;
+  }
+
+  .c-form-wrap {
+    background: rgba(14,24,50,0.7);
+    border: 1px solid rgba(194,176,103,0.16);
+    border-radius: 1.25rem;
+    padding: 2rem;
+  }
+  @media (min-width: 640px) { .c-form-wrap { padding: 2.5rem; } }
+
+  .form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  @media (min-width: 480px) { .form-row-2 { grid-template-columns: 1fr 1fr; } }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+  .form-label {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .form-label span { color: #c2b067; }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 0.6rem;
+    padding: 0.75rem 1rem;
+    color: #fff;
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    transition: border-color 200ms ease, background 200ms ease;
+  }
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    outline: none;
+    border-color: rgba(194,176,103,0.55);
+    background: rgba(255,255,255,0.08);
+  }
+  .form-input::placeholder,
+  .form-textarea::placeholder { color: rgba(255,255,255,0.22); }
+  .form-select { appearance: none; cursor: pointer; }
+  .form-select option { background: #263d68; color: #fff; }
+  .form-textarea { resize: vertical; min-height: 112px; }
+
+  .form-submit {
+    width: 100%;
+    background: #c2b067;
+    color: #090e1a;
+    border: none;
+    padding: 0.95rem 2rem;
+    border-radius: 0.75rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    margin-top: 0.5rem;
+    transition: background 200ms ease, transform 150ms ease;
+  }
+  .form-submit:hover { background: #d4c280; }
+  .form-submit:active { transform: scale(0.99); }
+  .form-submit:focus-visible {
+    outline: 2px solid #c2b067;
+    outline-offset: 3px;
+    border-radius: 0.75rem;
+  }
+  .form-note {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+    margin-top: 0.85rem;
+    line-height: 1.5;
+  }
+
+  #form-success {
+    display: none;
+    text-align: center;
+    padding: 3rem 1.5rem;
+  }
+  #form-success.show { display: block; }
+  .success-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(194,176,103,0.14);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+  }
+  .success-title {
+    font-size: 1.35rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .success-sub {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.48);
+    line-height: 1.65;
+  }
+
+  /* =========================================================
+     FOOTER
+     ========================================================= */
+  .site-footer {
+    background: #162844;
+    padding: 4.5rem 0 0;
+    color: rgba(255,255,255,0.48);
+  }
+
+  .foot-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  @media (min-width: 640px) { .foot-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .foot-grid { grid-template-columns: 2.2fr 1fr 1fr 1.5fr; gap: 3rem; } }
+
+  .foot-logo { height: 28px; width: auto; margin-bottom: 1rem; opacity: 0.85; }
+
+  .foot-tagline {
+    font-size: 0.85rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.38);
+    max-width: 220px;
+    margin-bottom: 1rem;
+  }
+  .foot-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.28);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 9999px;
+    padding: 0.25rem 0.75rem;
+    letter-spacing: 0.04em;
+  }
+
+  .foot-col-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.28);
+    margin-bottom: 1.1rem;
+  }
+  .foot-links { display: flex; flex-direction: column; gap: 0.65rem; }
+  .foot-link {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.48);
+    transition: color 200ms ease;
+  }
+  .foot-link:hover { color: #c2b067; }
+  .foot-link:focus-visible {
+    outline: 2px solid #c2b067;
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  .foot-contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.48);
+    margin-bottom: 0.8rem;
+    line-height: 1.45;
+  }
+  .foot-contact-icon {
+    width: 14px;
+    height: 14px;
+    color: #c2b067;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .foot-contact-link { color: rgba(255,255,255,0.48); transition: color 200ms ease; }
+  .foot-contact-link:hover { color: #c2b067; }
+
+  .foot-bar {
+    padding: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+  @media (min-width: 640px) {
+    .foot-bar { flex-direction: row; justify-content: space-between; align-items: center; }
+  }
+  .foot-copy { font-size: 0.75rem; color: rgba(255,255,255,0.22); }
+  .foot-legal { font-size: 0.75rem; color: rgba(255,255,255,0.22); }
 </style>
 </head>
 
-<body class="text-white" style="background:#2a3854;">
+<body class="text-white" style="background:#364e7e;">
 
 <!-- ===== HERO ===== -->
 <section class="relative min-h-screen flex flex-col overflow-hidden">
@@ -311,7 +771,7 @@
   <!-- Navbar -->
   <div class="relative z-10 px-6 md:px-12 lg:px-16 pt-6">
     <nav class="liquid-glass rounded-xl px-4 py-2 flex items-center justify-between">
-      <a href="#" aria-label="Elevated Custom Homes — home" class="flex items-center">
+      <a href="#" aria-label="Elevated Custom Homes" class="flex items-center">
         <img src="elevated-custom-homes-logo-gold-2.svg" alt="Elevated Custom Homes" class="logo-img">
       </a>
       <div class="hidden md:flex items-center gap-8">
@@ -321,7 +781,7 @@
         <a href="#contact"   class="text-sm text-white/90 hover:text-white transition-colors duration-200">Contact</a>
       </div>
       <a href="#contact" class="bg-gold hover:bg-gold-light text-black px-6 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
-        Start Your Build
+        Book a Free Call
       </a>
     </nav>
   </div>
@@ -384,6 +844,241 @@
   </div>
 </section>
 
+<!-- ============== PORTFOLIO PREVIEW ============== -->
+<section id="portfolio">
+  <div class="container">
+
+    <div class="p-header">
+      <span class="p-pill">Our Work</span>
+      <h2 class="p-title">Homes We've Built</h2>
+      <p class="p-sub">Every home is a one-of-a-kind build, crafted to the family, the land, and the life they want to live.</p>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- The Rose -->
+      <article class="home-card">
+        <div class="card-img-wrap">
+          <img src="Rose.webp" alt="The Rose, custom home in Southern Utah" class="card-photo" loading="lazy">
+          <div class="card-overlay"></div>
+          <div class="card-label">
+            <h3 class="card-name">The Rose</h3>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-specs">
+            <span>4 bed</span>
+            <span class="spec-dot">·</span>
+            <span>3 bath</span>
+            <span class="spec-dot">·</span>
+            <span>2,242 sf</span>
+          </div>
+          <p class="card-garage">3-car garage</p>
+          <div class="card-divider"></div>
+          <a href="the-rose.html" class="card-cta">
+            Learn More
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M7.5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- The Skyline -->
+      <article class="home-card">
+        <div class="card-img-wrap">
+          <img src="Skyline.webp" alt="The Skyline, luxury custom home in Southern Utah" class="card-photo" loading="lazy">
+          <div class="card-overlay"></div>
+          <div class="card-label">
+            <h3 class="card-name">The Skyline</h3>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-specs">
+            <span>5 bed</span>
+            <span class="spec-dot">·</span>
+            <span>6 bath</span>
+            <span class="spec-dot">·</span>
+            <span>5,680 sf</span>
+          </div>
+          <p class="card-garage">3-car garage</p>
+          <div class="card-amenities">
+            <span class="amenity-pill">Pickleball Court</span>
+            <span class="amenity-pill">Sauna</span>
+            <span class="amenity-pill">Gym</span>
+          </div>
+          <div class="card-divider"></div>
+          <a href="the-skyline.html" class="card-cta">
+            Learn More
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M7.5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- The Willow -->
+      <article class="home-card">
+        <div class="card-img-wrap">
+          <img src="Willow.webp" alt="The Willow, custom home in Southern Utah" class="card-photo" loading="lazy">
+          <div class="card-overlay"></div>
+          <div class="card-label">
+            <h3 class="card-name">The Willow</h3>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-specs">
+            <span>3 bed</span>
+            <span class="spec-dot">·</span>
+            <span>2 bath</span>
+            <span class="spec-dot">·</span>
+            <span>2,500 sf</span>
+          </div>
+          <p class="card-garage">2-car + RV garage</p>
+          <div class="card-divider"></div>
+          <a href="the-willow.html" class="card-cta">
+            Learn More
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M7.5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="portfolio-footer">
+      <a href="portfolio.html" class="see-all-btn">
+        See All Our Work
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M8.5 3.5l4.5 4.5-4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============== CONTACT ============== -->
+<section id="contact">
+  <div class="container">
+    <div class="c-grid">
+
+      <!-- Left: heading + trust signals -->
+      <div>
+        <span class="c-pill">Free Consultation</span>
+        <h2 class="c-title">See if we're the right fit.</h2>
+        <p class="c-sub">Tell us a bit about your project, and we'll set up a free, no-pressure call to see if we're the right fit for you.</p>
+        <div class="c-trust">
+          <div class="c-trust-item"><span class="c-trust-dot"></span>Licensed General Contractor, Southern Utah</div>
+          <div class="c-trust-item"><span class="c-trust-dot"></span>Family-owned and operated</div>
+          <div class="c-trust-item"><span class="c-trust-dot"></span>Zero-surprise pricing: detailed contracts, clear budgets</div>
+          <div class="c-trust-item"><span class="c-trust-dot"></span>Real schedules with real accountability</div>
+          <div class="c-trust-item"><span class="c-trust-dot"></span>No commitment required for this conversation</div>
+        </div>
+      </div>
+
+      <!-- Right: form -->
+      <div class="c-form-wrap">
+        <div id="form-fields">
+          <form id="contact-form" novalidate>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label" for="cf-name">Full Name <span>*</span></label>
+                <input class="form-input" type="text" id="cf-name" name="name" placeholder="Jane Smith" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="cf-phone">Phone <span>*</span></label>
+                <input class="form-input" type="tel" id="cf-phone" name="phone" placeholder="(435) 555-0100" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cf-email">Email Address <span>*</span></label>
+              <input class="form-input" type="email" id="cf-email" name="email" placeholder="jane@example.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cf-land">Do you already have land?</label>
+              <select class="form-select" id="cf-land" name="land">
+                <option value="" disabled selected>Select an option</option>
+                <option value="yes">Yes, I have a lot or parcel</option>
+                <option value="no">No, still need to find land</option>
+                <option value="looking">Actively looking right now</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cf-message">Tell us about your vision</label>
+              <textarea class="form-textarea" id="cf-message" name="message" placeholder="Square footage, style, must-haves, timeline. Anything helps us prepare for the conversation."></textarea>
+            </div>
+            <button type="submit" class="form-submit">Request a Free Call</button>
+            <p class="form-note">No pressure, no commitment. Just a real conversation about what you want to build.</p>
+          </form>
+        </div>
+        <div id="form-success">
+          <div class="success-icon">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+              <path d="M5 13l5.5 5.5L21 7" stroke="#c2b067" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p class="success-title">Request received. Talk soon.</p>
+          <p class="success-sub">We'll reach out within one business day to set up your free call.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="foot-grid">
+
+      <!-- Brand -->
+      <div>
+        <img src="elevated-custom-homes-logo-gold-2.svg" alt="Elevated Custom Homes" class="foot-logo">
+        <p class="foot-tagline">Designing and building one-of-a-kind custom homes across Southern Utah since day one.</p>
+        <span class="foot-badge">Licensed General Contractor</span>
+      </div>
+
+      <!-- Navigation -->
+      <div>
+        <p class="foot-col-label">Pages</p>
+        <div class="foot-links">
+          <a href="index.html" class="foot-link">Home</a>
+          <a href="portfolio.html" class="foot-link">Portfolio</a>
+          <a href="about.html" class="foot-link">About</a>
+          <a href="#contact" class="foot-link">Contact</a>
+        </div>
+      </div>
+
+      <!-- Homes -->
+      <div>
+        <p class="foot-col-label">Our Homes</p>
+        <div class="foot-links">
+          <a href="the-rose.html" class="foot-link">The Rose</a>
+          <a href="the-skyline.html" class="foot-link">The Skyline</a>
+          <a href="the-willow.html" class="foot-link">The Willow</a>
+        </div>
+      </div>
+
+      <!-- Contact info -->
+      <div>
+        <p class="foot-col-label">Contact</p>
+        <div class="foot-contact-item">
+          <svg class="foot-contact-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11 19.79 19.79 0 01.05 2.38 2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a href="tel:+14350000000" class="foot-contact-link">(435) 000-0000</a>
+        </div>
+        <div class="foot-contact-item">
+          <svg class="foot-contact-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a href="mailto:hello@elevatedcustomhomes.com" class="foot-contact-link">hello@elevatedcustomhomes.com</a>
+        </div>
+        <div class="foot-contact-item">
+          <svg class="foot-contact-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/></svg>
+          Cedar City, Utah<br><span style="font-size:0.78rem;color:rgba(255,255,255,0.3);">Serving Iron County &amp; Washington County</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="foot-bar">
+      <span class="foot-copy">&copy; 2025 Elevated Custom Homes. All rights reserved.</span>
+      <span class="foot-legal">Licensed General Contractor, State of Utah</span>
+    </div>
+  </div>
+</footer>
+
 <script>
 (function () {
   // ===== Animated heading =====
@@ -399,7 +1094,7 @@
     Array.from(line).forEach(function (ch, charIndex) {
       const span = document.createElement('span');
       span.className = 'char';
-      span.textContent = ch === ' ' ? ' ' : ch;
+      span.textContent = ch === ' ' ? ' ' : ch;
       span.style.transitionDelay = ((lineIndex * lineLength * charDelay) + (charIndex * charDelay)) + 'ms';
       lineEl.appendChild(span);
     });
@@ -414,17 +1109,17 @@
   setTimeout(function () { document.getElementById('hero-buttons').classList.add('show'); }, 1200);
   setTimeout(function () { document.getElementById('hero-tag').classList.add('show'); }, 1400);
 
-  // ===== Testimonials =====
+  // ===== Testimonials (3-col infinite scroll) =====
   const testimonials = [
-    { text: "Elevated took our vision and delivered something more thoughtful than we imagined. They treated our home like it was their own.", image: "https://randomuser.me/api/portraits/women/12.jpg", name: "Sarah Andersen", role: "Homeowner — Cedar City, UT" },
-    { text: "Brian's team returned every call — Saturday afternoons, Tuesday mornings. That kind of communication is rare in this industry.", image: "https://randomuser.me/api/portraits/women/22.jpg", name: "Jenna Holloway", role: "Homeowner — St. George, UT" },
-    { text: "The craftsmanship is what sells you. The relationship is what keeps you recommending them. Two years in and we still text Brian when something needs a touch-up.", image: "https://randomuser.me/api/portraits/men/32.jpg", name: "David Wright", role: "Homeowner — Hurricane, UT" },
-    { text: "We brought a folder full of Pinterest screenshots. They brought back a finished home that felt like it had always been ours.", image: "https://randomuser.me/api/portraits/women/42.jpg", name: "Rachel Reeves", role: "Homeowner — Kanarraville, UT" },
-    { text: "Every subcontractor who came through the door was respectful and clean. That tells you everything about how a builder runs their crews.", image: "https://randomuser.me/api/portraits/men/52.jpg", name: "Mike Thompson", role: "Architect — Cedar City, UT" },
-    { text: "Our budget changed three times because we changed our minds. Each time the team adjusted without drama. We never felt rushed.", image: "https://randomuser.me/api/portraits/women/62.jpg", name: "Olivia Carter", role: "Homeowner — New Harmony, UT" },
-    { text: "Our lot has a tricky slope. Elevated brought in the right engineers early — before any concrete was poured.", image: "https://randomuser.me/api/portraits/men/72.jpg", name: "James Whitaker", role: "Homeowner — Toquerville, UT" },
-    { text: "Walking through our finished home for the first time, my wife cried. That's when you know a builder did right by you.", image: "https://randomuser.me/api/portraits/men/82.jpg", name: "Carlos Mendoza", role: "Homeowner — Enoch, UT" },
-    { text: "Four years and two referrals later, we still get follow-up texts asking how the house is holding up. Small-town values, big-time work.", image: "https://randomuser.me/api/portraits/women/15.jpg", name: "Lauren Reed", role: "Homeowner — Parowan, UT" },
+    { text: "Elevated took our vision and delivered something more thoughtful than we imagined. They treated our home like it was their own.", image: "https://randomuser.me/api/portraits/women/12.jpg", name: "Sarah Andersen", role: "Homeowner, Cedar City, UT" },
+    { text: "Brian's team returned every call, Saturday afternoons, Tuesday mornings. That kind of communication is rare in this industry.", image: "https://randomuser.me/api/portraits/women/22.jpg", name: "Jenna Holloway", role: "Homeowner, St. George, UT" },
+    { text: "The craftsmanship is what sells you. The relationship is what keeps you recommending them. Two years in and we still text Brian when something needs a touch-up.", image: "https://randomuser.me/api/portraits/men/32.jpg", name: "David Wright", role: "Homeowner, Hurricane, UT" },
+    { text: "We brought a folder full of Pinterest screenshots. They brought back a finished home that felt like it had always been ours.", image: "https://randomuser.me/api/portraits/women/42.jpg", name: "Rachel Reeves", role: "Homeowner, Kanarraville, UT" },
+    { text: "Every subcontractor who came through the door was respectful and clean. That tells you everything about how a builder runs their crews.", image: "https://randomuser.me/api/portraits/men/52.jpg", name: "Mike Thompson", role: "Architect, Cedar City, UT" },
+    { text: "Our budget changed three times because we changed our minds. Each time the team adjusted without drama. We never felt rushed.", image: "https://randomuser.me/api/portraits/women/62.jpg", name: "Olivia Carter", role: "Homeowner, New Harmony, UT" },
+    { text: "Our lot has a tricky slope. Elevated brought in the right engineers early, before any concrete was poured.", image: "https://randomuser.me/api/portraits/men/72.jpg", name: "James Whitaker", role: "Homeowner, Toquerville, UT" },
+    { text: "Walking through our finished home for the first time, my wife cried. That's when you know a builder did right by you.", image: "https://randomuser.me/api/portraits/men/82.jpg", name: "Carlos Mendoza", role: "Homeowner, Enoch, UT" },
+    { text: "Four years and two referrals later, we still get follow-up texts asking how the house is holding up. Small-town values, big-time work.", image: "https://randomuser.me/api/portraits/women/15.jpg", name: "Lauren Reed", role: "Homeowner, Parowan, UT" },
   ];
 
   function escapeHtml(s) {
@@ -458,6 +1153,16 @@
     const items = columns[idx] || [];
     track.innerHTML = items.concat(items).map(renderCard).join('');
   });
+
+  // ===== Contact form: show success state on submit =====
+  var contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      document.getElementById('form-fields').style.display = 'none';
+      document.getElementById('form-success').classList.add('show');
+    });
+  }
 })();
 </script>
 
