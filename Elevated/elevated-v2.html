@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elevated Construction — Luxury Custom Homes in Southern Utah</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Inter', 'sans-serif'] },
+        colors: {
+          gold: '#c2b067',
+          'gold-light': '#d4c280',
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  html, body { background: #2a3854; }
+  body {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #fff;
+  }
+
+  /* ===== Liquid glass ===== */
+  .liquid-glass {
+    background: rgba(30, 42, 64, 0.5);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  .liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(180deg,
+      rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 20%,
+      rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%,
+      rgba(255,255,255,0.1) 80%, rgba(255,255,255,0.3) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* ===== Logo ===== */
+  .logo-img {
+    height: 34px;
+    width: auto;
+    display: block;
+  }
+  @media (min-width: 768px) { .logo-img { height: 38px; } }
+
+  /* ===== Focus-visible ===== */
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid #c2b067;
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+
+  /* ===== Video hero ===== */
+  .hero-video-wrap {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  .hero-video-wrap video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  /* Overlay: navy tint darkens the video enough for text, preserves color story */
+  .video-overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to top,
+        rgba(20,30,50,0.92) 0%,
+        rgba(30,42,64,0.60) 30%,
+        rgba(30,42,64,0.28) 60%,
+        rgba(30,42,64,0.18) 100%
+      ),
+      linear-gradient(to bottom,
+        rgba(20,30,50,0.55) 0%,
+        transparent 25%
+      );
+  }
+
+  /* ===== Animated heading ===== */
+  #hero-heading .char {
+    display: inline-block;
+    opacity: 0;
+    transform: translateX(-18px);
+    transition: opacity 500ms cubic-bezier(0.22, 1, 0.36, 1),
+                transform 500ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform, opacity;
+  }
+  #hero-heading .char.show { opacity: 1; transform: translateX(0); }
+  #hero-heading .line { display: block; }
+
+  .fade-in { opacity: 0; transition: opacity 900ms ease; }
+  .fade-in.show { opacity: 1; }
+
+  /* =========================================================
+     ROTATING GRADIENT BUTTON
+     Translates the React GradientButton component:
+       - outer ring = rotating conic-gradient
+       - inner fill  = dark background (like after:inset-[5px])
+       - text sits above both on z-index
+     ========================================================= */
+
+  /* Animate the --angle custom property (CSS Houdini) */
+  @property --btn-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+  @keyframes spin-btn {
+    to { --btn-angle: 360deg; }
+  }
+
+  .gradient-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 50px;
+    padding: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    /* conic-gradient rotates via --btn-angle */
+    background: conic-gradient(
+      from var(--btn-angle) at 50% 50%,
+      #c2b067 0%,
+      #3c4f73 25%,
+      #d4c280 50%,
+      #2a3854 75%,
+      #c2b067 100%
+    );
+    animation: spin-btn 3s linear infinite;
+    /* Fallback glow for browsers without @property support */
+    box-shadow:
+      0 0 22px rgba(194,176,103,0.40),
+      0 0 50px rgba(194,176,103,0.18);
+    transition: box-shadow 300ms ease, transform 300ms cubic-bezier(0.22,1,0.36,1);
+  }
+  .gradient-btn:hover {
+    box-shadow:
+      0 0 36px rgba(194,176,103,0.65),
+      0 0 80px rgba(194,176,103,0.28);
+    transform: translateY(-2px);
+  }
+  .gradient-btn:active { transform: translateY(0); }
+
+  /* Inner dark fill — the "after:inset-[5px] after:bg-background" from the component */
+  .gradient-btn-inner {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1a2640;
+    border-radius: 45px;
+    padding: 1.1rem 3.5rem;
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+    transition: background 300ms ease;
+  }
+  .gradient-btn:hover .gradient-btn-inner {
+    background: #1e2e4e;
+  }
+
+  /* Fallback: for browsers that don't support @property, use pseudo-element rotation */
+  @supports not (background: conic-gradient(from 1deg, red, blue)) {
+    .gradient-btn {
+      background: linear-gradient(135deg, #c2b067, #4a6090, #c2b067);
+      animation: none;
+    }
+  }
+
+  /* ===== Testimonials ===== */
+  .testimonials {
+    background: #f5efe4;
+    color: #1a1a1a;
+    padding: 5rem 0 6rem;
+    position: relative;
+  }
+  @media (min-width: 1024px) { .testimonials { padding: 7rem 0 8rem; } }
+
+  .t-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  @media (min-width: 768px) { .t-container { padding: 0 3rem; } }
+  @media (min-width: 1024px) { .t-container { padding: 0 4rem; } }
+
+  .t-header { max-width: 540px; margin: 0 auto; text-align: center; }
+  .t-pill {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    border: 1px solid rgba(194, 176, 103, 0.5);
+    border-radius: 9999px;
+    color: #8a7a3d;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .t-title {
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    margin-top: 1.25rem;
+    color: #1a1a1a;
+  }
+  .t-sub { margin-top: 1rem; color: #5a5550; font-size: 1rem; line-height: 1.6; }
+
+  .cols-wrap {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+    max-height: 720px;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+            mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+  }
+  .col { width: 100%; max-width: 20rem; }
+  .col.hide-md { display: none; }
+  .col.hide-lg { display: none; }
+  @media (min-width: 768px) { .col.hide-md { display: block; } }
+  @media (min-width: 1024px) { .col.hide-lg { display: block; } }
+
+  @keyframes t-scroll { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+  .track {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+    animation: t-scroll var(--dur, 38s) linear infinite;
+    will-change: transform;
+  }
+  .col-1 .track { --dur: 35s; }
+  .col-2 .track { --dur: 44s; }
+  .col-3 .track { --dur: 39s; }
+  .cols-wrap:hover .track { animation-play-state: paused; }
+  @media (prefers-reduced-motion: reduce) { .track { animation: none; } }
+
+  .testimonial-card {
+    padding: 2rem;
+    border-radius: 1.5rem;
+    background: #ffffff;
+    border: 1px solid rgba(194, 176, 103, 0.18);
+    box-shadow:
+      0 1px 2px rgba(26, 22, 12, 0.04),
+      0 12px 28px -16px rgba(194, 176, 103, 0.28);
+    width: 100%;
+    max-width: 20rem;
+  }
+  @media (min-width: 1024px) { .testimonial-card { padding: 2.5rem; } }
+  .t-text { font-size: 0.95rem; line-height: 1.65; color: #2a2622; letter-spacing: -0.005em; }
+  .t-meta { display: flex; align-items: center; gap: 0.65rem; margin-top: 1.25rem; }
+  .t-avatar { width: 2.5rem; height: 2.5rem; border-radius: 9999px; object-fit: cover; flex-shrink: 0; }
+  .t-name { font-weight: 500; letter-spacing: -0.01em; line-height: 1.25; color: #1a1a1a; font-size: 0.95rem; }
+  .t-role { line-height: 1.25; color: #5a5550; font-size: 0.85rem; letter-spacing: -0.005em; margin-top: 0.15rem; }
+</style>
+</head>
+
+<body class="text-white" style="background:#2a3854;">
+
+<!-- ===== HERO ===== -->
+<section class="relative min-h-screen flex flex-col overflow-hidden">
+
+  <!-- Video background -->
+  <div class="hero-video-wrap" aria-hidden="true">
+    <video autoplay muted loop playsinline preload="auto">
+      <source src="SkylineTimelapse.mp4" type="video/mp4">
+    </video>
+  </div>
+
+  <!-- Navy tint overlay -->
+  <div class="video-overlay pointer-events-none" aria-hidden="true"></div>
+
+  <!-- Navbar -->
+  <div class="relative z-10 px-6 md:px-12 lg:px-16 pt-6">
+    <nav class="liquid-glass rounded-xl px-4 py-2 flex items-center justify-between">
+      <a href="#" aria-label="Elevated Custom Homes — home" class="flex items-center">
+        <img src="elevated-custom-homes-logo-gold-2.svg" alt="Elevated Custom Homes" class="logo-img">
+      </a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#process"   class="text-sm text-white/90 hover:text-white transition-colors duration-200">Process</a>
+        <a href="#portfolio" class="text-sm text-white/90 hover:text-white transition-colors duration-200">Portfolio</a>
+        <a href="about.html" class="text-sm text-white/90 hover:text-white transition-colors duration-200">About</a>
+        <a href="#contact"   class="text-sm text-white/90 hover:text-white transition-colors duration-200">Contact</a>
+      </div>
+      <a href="#contact" class="bg-gold hover:bg-gold-light text-black px-6 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
+        Start Your Build
+      </a>
+    </nav>
+  </div>
+
+  <!-- Hero content -->
+  <div class="relative z-10 flex-1 flex flex-col justify-end px-6 md:px-12 lg:px-16 pb-16 lg:pb-20">
+
+    <!-- Headline + tagline row -->
+    <div class="lg:grid lg:grid-cols-2 lg:items-end lg:gap-12 mb-10">
+
+      <!-- Left column: heading + sub -->
+      <div>
+        <h1 id="hero-heading"
+            class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-normal mb-6"
+            style="letter-spacing: -0.04em;">
+        </h1>
+
+        <p id="hero-sub" class="fade-in text-base md:text-lg text-white/70 max-w-xl"
+           style="line-height: 1.65;">
+          Family-owned custom home builders crafting one-of-a-kind residences across Southern Utah.
+        </p>
+      </div>
+
+      <!-- Right column: tagline badge -->
+      <div class="flex items-end justify-start lg:justify-end mt-8 lg:mt-0">
+        <div id="hero-tag"
+             class="fade-in liquid-glass border border-white/20 px-6 py-3 rounded-xl">
+          <span class="text-lg md:text-xl lg:text-2xl font-light tracking-tight">
+            Design. Build. Elevate.
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Centered CTA button row -->
+    <div id="hero-buttons" class="fade-in flex justify-center">
+      <a href="#contact" class="gradient-btn" aria-label="Get in Touch">
+        <span class="gradient-btn-inner">Get in Touch</span>
+      </a>
+    </div>
+
+  </div>
+
+</section>
+
+<!-- ===== TESTIMONIALS ===== -->
+<section id="testimonials" class="testimonials">
+  <div class="t-container">
+    <div class="t-header">
+      <span class="t-pill">Testimonials</span>
+      <h2 class="t-title">What our homeowners say</h2>
+      <p class="t-sub">Real conversations from the families who've built with Elevated.</p>
+    </div>
+    <div class="cols-wrap" aria-label="Client testimonials">
+      <div class="col col-1"><div class="track" data-col="0"></div></div>
+      <div class="col col-2 hide-md"><div class="track" data-col="1"></div></div>
+      <div class="col col-3 hide-lg"><div class="track" data-col="2"></div></div>
+    </div>
+  </div>
+</section>
+
+<script>
+(function () {
+  // ===== Animated heading =====
+  const heading = document.getElementById('hero-heading');
+  const lines = ['Custom homes,', 'elevated by craft.'];
+  const charDelay = 30;
+  const initialDelay = 200;
+  const lineLength = Math.max.apply(null, lines.map(function (l) { return l.length; }));
+
+  lines.forEach(function (line, lineIndex) {
+    const lineEl = document.createElement('span');
+    lineEl.className = 'line';
+    Array.from(line).forEach(function (ch, charIndex) {
+      const span = document.createElement('span');
+      span.className = 'char';
+      span.textContent = ch === ' ' ? ' ' : ch;
+      span.style.transitionDelay = ((lineIndex * lineLength * charDelay) + (charIndex * charDelay)) + 'ms';
+      lineEl.appendChild(span);
+    });
+    heading.appendChild(lineEl);
+  });
+
+  setTimeout(function () {
+    heading.querySelectorAll('.char').forEach(function (c) { c.classList.add('show'); });
+  }, initialDelay);
+
+  setTimeout(function () { document.getElementById('hero-sub').classList.add('show'); }, 800);
+  setTimeout(function () { document.getElementById('hero-buttons').classList.add('show'); }, 1200);
+  setTimeout(function () { document.getElementById('hero-tag').classList.add('show'); }, 1400);
+
+  // ===== Testimonials =====
+  const testimonials = [
+    { text: "Elevated took our vision and delivered something more thoughtful than we imagined. They treated our home like it was their own.", image: "https://randomuser.me/api/portraits/women/12.jpg", name: "Sarah Andersen", role: "Homeowner — Cedar City, UT" },
+    { text: "Brian's team returned every call — Saturday afternoons, Tuesday mornings. That kind of communication is rare in this industry.", image: "https://randomuser.me/api/portraits/women/22.jpg", name: "Jenna Holloway", role: "Homeowner — St. George, UT" },
+    { text: "The craftsmanship is what sells you. The relationship is what keeps you recommending them. Two years in and we still text Brian when something needs a touch-up.", image: "https://randomuser.me/api/portraits/men/32.jpg", name: "David Wright", role: "Homeowner — Hurricane, UT" },
+    { text: "We brought a folder full of Pinterest screenshots. They brought back a finished home that felt like it had always been ours.", image: "https://randomuser.me/api/portraits/women/42.jpg", name: "Rachel Reeves", role: "Homeowner — Kanarraville, UT" },
+    { text: "Every subcontractor who came through the door was respectful and clean. That tells you everything about how a builder runs their crews.", image: "https://randomuser.me/api/portraits/men/52.jpg", name: "Mike Thompson", role: "Architect — Cedar City, UT" },
+    { text: "Our budget changed three times because we changed our minds. Each time the team adjusted without drama. We never felt rushed.", image: "https://randomuser.me/api/portraits/women/62.jpg", name: "Olivia Carter", role: "Homeowner — New Harmony, UT" },
+    { text: "Our lot has a tricky slope. Elevated brought in the right engineers early — before any concrete was poured.", image: "https://randomuser.me/api/portraits/men/72.jpg", name: "James Whitaker", role: "Homeowner — Toquerville, UT" },
+    { text: "Walking through our finished home for the first time, my wife cried. That's when you know a builder did right by you.", image: "https://randomuser.me/api/portraits/men/82.jpg", name: "Carlos Mendoza", role: "Homeowner — Enoch, UT" },
+    { text: "Four years and two referrals later, we still get follow-up texts asking how the house is holding up. Small-town values, big-time work.", image: "https://randomuser.me/api/portraits/women/15.jpg", name: "Lauren Reed", role: "Homeowner — Parowan, UT" },
+  ];
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, function (c) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+    });
+  }
+
+  function renderCard(t) {
+    return (
+      '<article class="testimonial-card">' +
+        '<p class="t-text">' + escapeHtml(t.text) + '</p>' +
+        '<div class="t-meta">' +
+          '<img class="t-avatar" src="' + t.image + '" alt="' + escapeHtml(t.name) + '" width="40" height="40" loading="lazy">' +
+          '<div>' +
+            '<div class="t-name">' + escapeHtml(t.name) + '</div>' +
+            '<div class="t-role">' + escapeHtml(t.role) + '</div>' +
+          '</div>' +
+        '</div>' +
+      '</article>'
+    );
+  }
+
+  const columns = [
+    testimonials.slice(0, 3),
+    testimonials.slice(3, 6),
+    testimonials.slice(6, 9),
+  ];
+  document.querySelectorAll('.track').forEach(function (track) {
+    const idx = parseInt(track.getAttribute('data-col'), 10);
+    const items = columns[idx] || [];
+    track.innerHTML = items.concat(items).map(renderCard).join('');
+  });
+})();
+</script>
+
+</body>
+</html>

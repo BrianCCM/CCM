@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — Elevated Construction & Development</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Inter', 'sans-serif'] },
+        colors: {
+          gold: '#c2b067',
+          'gold-light': '#d4c280',
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  html, body { background: #2a3854; }
+  body {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #fff;
+  }
+
+  /* ===== Liquid glass ===== */
+  .liquid-glass {
+    background: rgba(30, 42, 64, 0.5);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  .liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(180deg,
+      rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 20%,
+      rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%,
+      rgba(255,255,255,0.1) 80%, rgba(255,255,255,0.3) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* ===== Logo ===== */
+  .logo-img {
+    height: 34px;
+    width: auto;
+    display: block;
+  }
+  @media (min-width: 768px) {
+    .logo-img { height: 38px; }
+  }
+
+  /* ===== Focus-visible ===== */
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid #c2b067;
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+
+  /* ===== Split hero ===== */
+  .split-hero {
+    background: linear-gradient(145deg, #1e2a40 0%, #2a3854 45%, #3c4f73 100%);
+    min-height: calc(100vh - 72px);
+    display: grid;
+    grid-template-columns: 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  @media (min-width: 1024px) {
+    .split-hero {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  .split-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 50% 60% at 20% 50%, rgba(194,176,103,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-text-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4rem 1.5rem 3rem;
+  }
+  @media (min-width: 768px) { .hero-text-col { padding: 5rem 3rem 4rem; } }
+  @media (min-width: 1024px) { .hero-text-col { padding: 5rem 4rem 5rem 4rem; } }
+
+  .hero-photo-col {
+    position: relative;
+    overflow: hidden;
+    min-height: 55vw;
+  }
+  @media (min-width: 1024px) {
+    .hero-photo-col { min-height: unset; }
+  }
+  .hero-photo-col img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+  .hero-photo-col::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to right, #2a3854 0%, transparent 22%),
+      linear-gradient(to top, #2a3854 0%, transparent 14%);
+    pointer-events: none;
+  }
+  @media (min-width: 1024px) {
+    .hero-photo-col::after {
+      background:
+        linear-gradient(to right, #3c4f73 0%, transparent 12%),
+        linear-gradient(to top, #2a3854 0%, transparent 10%);
+    }
+  }
+
+  /* ===== About intro (dark) ===== */
+  .about-intro {
+    background: linear-gradient(180deg, #2a3854 0%, #3c4f73 100%);
+    padding: 5rem 0 6rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* ===== Bio section (warm off-white) ===== */
+  .bio-section {
+    background: #f5efe4;
+    color: #1a1a1a;
+    padding: 6rem 0 7rem;
+  }
+  @media (min-width: 1024px) {
+    .bio-section { padding: 7rem 0 8rem; }
+  }
+
+  /* ===== Container ===== */
+  .container {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+  @media (min-width: 768px) { .container { padding: 0 3rem; } }
+  @media (min-width: 1024px) { .container { padding: 0 4rem; } }
+
+  /* ===== Gold pill label ===== */
+  .pill {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    border: 1px solid rgba(194, 176, 103, 0.5);
+    border-radius: 9999px;
+    color: #c2b067;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .pill-dark {
+    color: #8a7a3d;
+    border-color: rgba(194,176,103,0.4);
+  }
+
+  /* ===== Gold rule ===== */
+  .gold-rule {
+    display: block;
+    width: 2.5rem;
+    height: 2px;
+    background: #c2b067;
+    border-radius: 9999px;
+  }
+
+  /* ===== Stat strip ===== */
+  .stat-strip {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem 1.5rem;
+    margin-top: 2.5rem;
+  }
+  @media (min-width: 640px) {
+    .stat-strip { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  }
+  .stat-num {
+    font-size: 2.25rem;
+    font-weight: 300;
+    letter-spacing: -0.04em;
+    color: #1a1a1a;
+    line-height: 1;
+  }
+  .stat-label {
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #5a5550;
+    margin-top: 0.35rem;
+  }
+
+  /* ===== CTA footer ===== */
+  .cta-footer {
+    background: linear-gradient(180deg, #3c4f73 0%, #2a3854 60%, #1e2a40 100%);
+    padding: 5rem 0 6rem;
+    text-align: center;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  /* ===== Fade entrance ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 700ms cubic-bezier(0.22,1,0.36,1),
+                transform 700ms cubic-bezier(0.22,1,0.36,1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== Nav active page indicator ===== */
+  .nav-active {
+    color: #c2b067 !important;
+  }
+</style>
+</head>
+
+<body class="text-white" style="background:#2a3854;">
+
+<!-- ===== NAVBAR ===== -->
+<div class="sticky top-0 z-50 px-6 md:px-12 lg:px-16 pt-5 pb-3 backdrop-blur-md" style="background: rgba(30,42,64,0.88); border-bottom: 1px solid rgba(255,255,255,0.08);">
+  <nav class="liquid-glass rounded-xl px-4 py-2 flex items-center justify-between">
+    <a href="index.html" aria-label="Elevated Custom Homes — home" class="flex items-center">
+      <img src="elevated-custom-homes-logo-gold-2.svg" alt="Elevated Custom Homes" class="logo-img">
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="index.html#process"   class="text-sm text-white/90 hover:text-gray-300 transition-colors duration-200">Process</a>
+      <a href="index.html#portfolio" class="text-sm text-white/90 hover:text-gray-300 transition-colors duration-200">Portfolio</a>
+      <a href="about.html"           class="text-sm nav-active transition-colors duration-200">About</a>
+      <a href="index.html#contact"   class="text-sm text-white/90 hover:text-gray-300 transition-colors duration-200">Contact</a>
+    </div>
+    <a href="index.html#contact" class="bg-gold hover:bg-gold-light text-black px-6 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
+      Start Your Build
+    </a>
+  </nav>
+</div>
+
+<!-- ===== SPLIT HERO ===== -->
+<section class="split-hero">
+
+  <!-- Left: text -->
+  <div class="hero-text-col relative z-10">
+    <span class="pill reveal">About Us</span>
+    <h1 class="reveal mt-5 text-5xl md:text-6xl lg:text-7xl font-light" style="letter-spacing: -0.04em; line-height: 1.05; transition-delay: 80ms;">
+      Meet the<br>Builder
+    </h1>
+    <p class="reveal mt-5 text-base md:text-lg text-white/55 max-w-sm" style="line-height: 1.7; transition-delay: 160ms;">
+      Family-owned and craft-obsessed — building homes across Southern Utah for over a decade.
+    </p>
+    <div class="reveal mt-8" style="transition-delay: 240ms;">
+      <a href="index.html#contact"
+         class="inline-block bg-gold hover:bg-gold-light text-black px-8 py-3 rounded-lg font-medium transition-colors duration-200">
+        Start Your Build
+      </a>
+    </div>
+  </div>
+
+  <!-- Right: photo -->
+  <div class="hero-photo-col">
+    <img src="Family-Photo-1.jpeg.webp"
+         alt="Dalton Hunt and family"
+         loading="eager">
+  </div>
+
+</section>
+
+<!-- ===== COMPANY INTRO ===== -->
+<section class="about-intro">
+  <div class="container">
+    <div class="max-w-3xl mx-auto text-center">
+      <span class="gold-rule mx-auto reveal"></span>
+      <p class="reveal mt-8 text-lg md:text-xl text-white/75" style="line-height: 1.8; transition-delay: 60ms;">
+        Welcome to our luxury home design-building company in Southern Utah, where exquisite craftsmanship and personalized design converge to create exceptional living spaces. With a reputation for excellence, we specialize in crafting custom homes that reflect the unique tastes and lifestyles of our discerning clients.
+      </p>
+      <p class="reveal mt-6 text-base md:text-lg text-white/55" style="line-height: 1.8; transition-delay: 120ms;">
+        Our dedicated team of architects, designers, and artisans work collaboratively to bring your vision to life, employing the finest materials, attention to detail, and innovative design solutions. Trust us to build your dream home, where luxury and sophistication blend seamlessly for an unparalleled living experience.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DALTON BIO ===== -->
+<section class="bio-section">
+  <div class="container">
+
+    <div class="max-w-3xl mx-auto">
+
+      <!-- Text column -->
+      <div class="reveal">
+        <span class="pill pill-dark">Founder</span>
+
+        <h2 class="mt-5 text-4xl md:text-5xl font-light text-stone-900" style="letter-spacing: -0.04em; line-height: 1.1;">
+          Dalton Hunt
+        </h2>
+
+        <span class="gold-rule mt-5"></span>
+
+        <p class="mt-6 text-stone-700" style="font-size: 1rem; line-height: 1.8;">
+          Dalton Hunt is the founder of Elevated Construction and Development. With over 13 years of experience in the industry, Dalton has established himself as a highly skilled and visionary builder. Throughout his career, he has built or renovated over 100 homes, showcasing his expertise in luxury home construction and renovations. He also built multiple business centers, student housing facilities, and multi-family units.
+        </p>
+
+        <p class="mt-5 text-stone-600" style="font-size: 1rem; line-height: 1.8;">
+          Dalton's passion for creating exceptional living environments is evident in his meticulous attention to detail and commitment to quality craftsmanship. He works closely with clients, architects, and designers to bring their unique visions to life, ensuring that each project reflects the individuality and desires of the homeowner.
+        </p>
+
+        <p class="mt-5 text-stone-600" style="font-size: 1rem; line-height: 1.8;">
+          As the driving force behind Elevated Construction and Development, Dalton emphasizes the importance of exceptional customer service, open communication, and delivering projects on time. His hands-on approach and deep industry knowledge ensure that every aspect of the construction process is executed with precision and to the highest standards.
+        </p>
+
+        <p class="mt-5 text-stone-600" style="font-size: 1rem; line-height: 1.8;">
+          With a reputation built on trust and excellence, Dalton Hunt continues to be a respected figure in the field of luxury home building and renovations.
+        </p>
+
+        <!-- Stats -->
+        <div class="stat-strip">
+          <div>
+            <div class="stat-num">13+</div>
+            <div class="stat-label">Years of Experience</div>
+          </div>
+          <div>
+            <div class="stat-num">100+</div>
+            <div class="stat-label">Homes Built &amp; Renovated</div>
+          </div>
+          <div>
+            <div class="stat-num">100%</div>
+            <div class="stat-label">Family Owned</div>
+          </div>
+        </div>
+
+      </div>
+
+  </div>
+</section>
+
+<!-- ===== CTA FOOTER ===== -->
+<section class="cta-footer">
+  <div class="container">
+    <span class="pill reveal">Ready to Build?</span>
+    <h2 class="reveal mt-5 text-4xl md:text-5xl font-light" style="letter-spacing: -0.04em; transition-delay: 60ms;">
+      Let's build something extraordinary.
+    </h2>
+    <p class="reveal mt-4 text-white/55 max-w-md mx-auto" style="line-height: 1.7; transition-delay: 120ms;">
+      Start a conversation with Dalton and the team — no pressure, just a genuine discussion about your vision.
+    </p>
+    <div class="reveal mt-8" style="transition-delay: 180ms;">
+      <a href="index.html#contact"
+         class="inline-block bg-gold hover:bg-gold-light text-black px-10 py-4 rounded-lg font-medium transition-colors duration-200">
+        Start Your Build
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Intersection Observer for .reveal elements
+  (function () {
+    const els = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    els.forEach(function (el) { io.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
