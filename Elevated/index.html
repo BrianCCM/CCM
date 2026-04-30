@@ -161,142 +161,631 @@
   }
 
   /* =========================================================
-     TESTIMONIALS — infinite vertical scroll, 3 columns
+     TESTIMONIALS — animated two-column
      ========================================================= */
   .testimonials {
     background: #f5efe4;
     color: #1a1a1a;
     padding: 5rem 0 6rem;
     position: relative;
+    overflow: hidden;
   }
-  @media (min-width: 1024px) {
-    .testimonials { padding: 7rem 0 8rem; }
-  }
+  @media (min-width: 1024px) { .testimonials { padding: 7rem 0 8rem; } }
 
-  .t-container {
+  .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 1.5rem;
   }
-  @media (min-width: 768px) { .t-container { padding: 0 3rem; } }
-  @media (min-width: 1024px) { .t-container { padding: 0 4rem; } }
+  @media (min-width: 768px) { .container { padding: 0 3rem; } }
+  @media (min-width: 1024px) { .container { padding: 0 4rem; } }
 
-  .t-header {
-    max-width: 540px;
-    margin: 0 auto;
-    text-align: center;
+  /* Two-column grid */
+  .t-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 700ms ease, transform 700ms ease;
   }
+  .t-grid.visible { opacity: 1; transform: translateY(0); }
+  @media (min-width: 768px) { .t-grid { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+  @media (min-width: 1024px) { .t-grid { grid-template-columns: 5fr 7fr; gap: 5rem; } }
+
+  /* Left column */
   .t-pill {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     padding: 0.35rem 1rem;
-    border: 1px solid rgba(194, 176, 103, 0.5);
+    border: 1px solid rgba(194,176,103,0.5);
     border-radius: 9999px;
     color: #8a7a3d;
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+    margin-bottom: 1.5rem;
   }
   .t-title {
     font-size: clamp(1.75rem, 4vw, 3rem);
     font-weight: 500;
     letter-spacing: -0.035em;
     line-height: 1.1;
-    margin-top: 1.25rem;
     color: #1a1a1a;
+    margin-bottom: 1rem;
   }
   .t-sub {
-    margin-top: 1rem;
     color: #5a5550;
     font-size: 1rem;
-    line-height: 1.6;
+    line-height: 1.65;
+    margin-bottom: 2rem;
   }
 
-  .cols-wrap {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    margin-top: 3rem;
-    max-height: 720px;
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
-            mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+  /* Navigation dots */
+  .t-dots { display: flex; align-items: center; gap: 0.6rem; }
+  .t-dot {
+    height: 10px;
+    border-radius: 9999px;
+    background: rgba(26,22,12,0.18);
+    border: none;
+    cursor: pointer;
+    width: 10px;
+    padding: 0;
+    transition: width 320ms ease, background 320ms ease;
   }
+  .t-dot.active { width: 2.5rem; background: #c2b067; }
+  .t-dot:hover:not(.active) { background: rgba(26,22,12,0.35); }
+  .t-dot:focus-visible { outline: 2px solid #c2b067; outline-offset: 3px; border-radius: 9999px; }
 
-  .col { width: 100%; max-width: 20rem; }
-  .col.hide-md { display: none; }
-  .col.hide-lg { display: none; }
-  @media (min-width: 768px) { .col.hide-md { display: block; } }
-  @media (min-width: 1024px) { .col.hide-lg { display: block; } }
-
-  @keyframes t-scroll {
-    from { transform: translateY(0); }
-    to   { transform: translateY(-50%); }
+  /* Right column — card stage */
+  .t-stage {
+    position: relative;
+    min-height: 370px;
   }
-  .track {
+  @media (min-width: 1024px) { .t-stage { min-height: 390px; } }
+
+  .t-card {
+    position: absolute;
+    inset: 0;
+    background: #ffffff;
+    border: 1px solid rgba(194,176,103,0.18);
+    border-radius: 1.25rem;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    padding-bottom: 1.5rem;
-    animation: t-scroll var(--dur, 38s) linear infinite;
-    will-change: transform;
-  }
-  .col-1 .track { --dur: 35s; }
-  .col-2 .track { --dur: 44s; }
-  .col-3 .track { --dur: 39s; }
-  .cols-wrap:hover .track { animation-play-state: paused; }
-
-  @media (prefers-reduced-motion: reduce) {
-    .track { animation: none; }
-  }
-
-  .testimonial-card {
-    padding: 2rem;
-    border-radius: 1.5rem;
-    background: #ffffff;
-    border: 1px solid rgba(194, 176, 103, 0.18);
     box-shadow:
-      0 1px 2px rgba(26, 22, 12, 0.04),
-      0 12px 28px -16px rgba(194, 176, 103, 0.28);
-    width: 100%;
-    max-width: 20rem;
+      0 1px 2px rgba(26,22,12,0.04),
+      0 16px 40px -12px rgba(194,176,103,0.22);
+    opacity: 0;
+    transform: translateX(36px) scale(0.97);
+    transition: opacity 500ms cubic-bezier(0.22,1,0.36,1),
+                transform 500ms cubic-bezier(0.22,1,0.36,1);
+    pointer-events: none;
   }
-  @media (min-width: 1024px) {
-    .testimonial-card { padding: 2.5rem; }
+  .t-card.active {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    pointer-events: auto;
+    z-index: 2;
   }
-  .t-text {
-    font-size: 0.95rem;
-    line-height: 1.65;
+
+  /* Stars */
+  .t-stars { display: flex; gap: 0.25rem; margin-bottom: 1.25rem; }
+  .t-star { width: 17px; height: 17px; fill: #c2b067; color: #c2b067; }
+
+  /* Quote */
+  .t-quote-wrap { position: relative; flex: 1; margin-bottom: 1.25rem; }
+  .t-quote-icon {
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    width: 26px;
+    height: 26px;
+    color: rgba(194,176,103,0.25);
+  }
+  .t-quote-text {
+    position: relative;
+    z-index: 1;
+    font-size: 0.94rem;
+    line-height: 1.72;
     color: #2a2622;
     letter-spacing: -0.005em;
+    padding-left: 0.25rem;
   }
-  .t-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-    margin-top: 1.25rem;
-  }
+
+  /* Separator */
+  .t-sep { height: 1px; background: rgba(26,22,12,0.08); margin-bottom: 1.25rem; }
+
+  /* Avatar row */
+  .t-meta { display: flex; align-items: center; gap: 0.75rem; }
   .t-avatar {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 44px;
+    height: 44px;
     border-radius: 9999px;
     object-fit: cover;
     flex-shrink: 0;
+    border: 2px solid rgba(194,176,103,0.28);
   }
-  .t-name {
+  .t-name { font-weight: 500; font-size: 0.9rem; letter-spacing: -0.01em; color: #1a1a1a; line-height: 1.3; }
+  .t-role { font-size: 0.8rem; color: #5a5550; line-height: 1.3; margin-top: 0.1rem; }
+
+  /* Decorative corners */
+  .t-deco-br, .t-deco-tl {
+    position: absolute;
+    width: 72px;
+    height: 72px;
+    border-radius: 0.75rem;
+    background: rgba(194,176,103,0.09);
+    pointer-events: none;
+  }
+  .t-deco-br { bottom: -1.5rem; left: -1.5rem; }
+  .t-deco-tl { top: -1.5rem; right: -1.5rem; }
+
+  /* =========================================================
+     PORTFOLIO CARDS
+     ========================================================= */
+  #portfolio {
+    background: #1e2840;
+    padding: 5rem 0 6rem;
+  }
+  @media (min-width: 1024px) { #portfolio { padding: 7rem 0 8rem; } }
+
+
+  .p-header { text-align: center; margin-bottom: 3.5rem; }
+
+  .p-pill {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    border: 1px solid rgba(194, 176, 103, 0.5);
+    border-radius: 9999px;
+    color: #c2b067;
+    font-size: 0.75rem;
     font-weight: 500;
-    letter-spacing: -0.01em;
-    line-height: 1.25;
-    color: #1a1a1a;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .p-title {
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    line-height: 1.1;
+    color: #fff;
+  }
+  .p-sub {
+    margin-top: 1rem;
+    color: rgba(255,255,255,0.55);
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  @media (min-width: 768px) { .cards-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .cards-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .home-card {
+    background: rgba(12, 18, 32, 0.92);
+    border: 1px solid rgba(194, 176, 103, 0.14);
+    border-radius: 1.25rem;
+    overflow: hidden;
+    transition: transform 420ms cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 420ms cubic-bezier(0.34, 1.56, 0.64, 1),
+                border-color 280ms ease;
+    will-change: transform;
+    display: block;
+    text-decoration: none;
+  }
+  .home-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: rgba(194, 176, 103, 0.42);
+    box-shadow:
+      0 4px 8px rgba(0,0,0,0.25),
+      0 24px 48px rgba(0,0,0,0.45),
+      0 0 0 1px rgba(194,176,103,0.08);
+  }
+  .home-card:focus-visible {
+    outline: 2px solid #c2b067;
+    outline-offset: 3px;
+    border-radius: 1.25rem;
+  }
+
+  .card-img-wrap {
+    position: relative;
+    height: 260px;
+    overflow: hidden;
+  }
+  .card-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+  .home-card:hover .card-photo { transform: scale(1.06); }
+
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+      rgba(0,0,0,0.82) 0%,
+      rgba(0,0,0,0.38) 42%,
+      rgba(0,0,0,0.06) 72%,
+      transparent 100%);
+  }
+  .card-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1.25rem 1.5rem;
+  }
+  .card-name {
+    font-size: 1.5rem;
+    font-weight: 400;
+    letter-spacing: -0.03em;
+    color: #fff;
+    line-height: 1.2;
+  }
+
+  .card-body { padding: 1.25rem 1.5rem 1.5rem; }
+
+  .card-specs {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.72);
+    margin-bottom: 0.4rem;
+  }
+  .spec-dot { color: rgba(194,176,103,0.45); font-size: 0.7rem; }
+
+  .card-garage {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.42);
+    margin-bottom: 0.6rem;
+  }
+
+  .card-amenities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.4rem;
+  }
+  .amenity-pill {
+    display: inline-block;
+    padding: 0.18rem 0.6rem;
+    border: 1px solid rgba(194,176,103,0.28);
+    border-radius: 9999px;
+    font-size: 0.68rem;
+    color: #c2b067;
+    letter-spacing: 0.02em;
+  }
+
+  .card-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.07);
+    margin: 1rem 0 0.9rem;
+  }
+
+  .card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #c2b067;
+    transition: gap 200ms ease;
+  }
+  .card-cta:hover { gap: 0.65rem; }
+
+  .portfolio-footer {
+    text-align: center;
+    margin-top: 3.5rem;
+  }
+  .see-all-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid rgba(194,176,103,0.45);
+    color: #c2b067;
+    padding: 0.8rem 2.25rem;
+    border-radius: 0.75rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background 200ms ease, border-color 200ms ease;
+  }
+  .see-all-btn:hover {
+    background: rgba(194,176,103,0.1);
+    border-color: rgba(194,176,103,0.75);
+  }
+  .see-all-btn:focus-visible {
+    outline: 2px solid #c2b067;
+    outline-offset: 3px;
+    border-radius: 0.75rem;
+  }
+
+  /* =========================================================
+     CONTACT SECTION
+     ========================================================= */
+  #contact {
+    background: #1e2840;
+    padding: 5rem 0 6rem;
+  }
+  @media (min-width: 1024px) { #contact { padding: 7rem 0 8rem; } }
+
+  .c-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+  @media (min-width: 768px) { .c-grid { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+  @media (min-width: 1024px) { .c-grid { grid-template-columns: 5fr 7fr; gap: 5rem; } }
+
+  .c-pill {
+    display: inline-block;
+    padding: 0.35rem 1rem;
+    border: 1px solid rgba(194,176,103,0.5);
+    border-radius: 9999px;
+    color: #c2b067;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+  .c-title {
+    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-weight: 400;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    color: #fff;
+    margin-bottom: 1rem;
+  }
+  .c-sub {
+    color: rgba(255,255,255,0.52);
+    font-size: 1rem;
+    line-height: 1.65;
+    margin-bottom: 2.5rem;
+  }
+  .c-trust {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+  .c-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.4;
+  }
+  .c-trust-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: #c2b067;
+    flex-shrink: 0;
+  }
+
+  /* Form card */
+  .c-form-wrap {
+    background: rgba(10,15,28,0.7);
+    border: 1px solid rgba(194,176,103,0.16);
+    border-radius: 1.25rem;
+    padding: 2rem;
+  }
+  @media (min-width: 640px) { .c-form-wrap { padding: 2.5rem; } }
+
+  .form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  @media (min-width: 480px) { .form-row-2 { grid-template-columns: 1fr 1fr; } }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+  .form-label {
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: rgba(255,255,255,0.55);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .form-label span { color: #c2b067; }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 0.6rem;
+    padding: 0.75rem 1rem;
+    color: #fff;
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    transition: border-color 200ms ease, background 200ms ease;
+  }
+  .form-input:focus,
+  .form-select:focus,
+  .form-textarea:focus {
+    outline: none;
+    border-color: rgba(194,176,103,0.55);
+    background: rgba(255,255,255,0.08);
+  }
+  .form-input::placeholder,
+  .form-textarea::placeholder { color: rgba(255,255,255,0.22); }
+  .form-select { appearance: none; cursor: pointer; }
+  .form-select option { background: #1e2840; color: #fff; }
+  .form-textarea { resize: vertical; min-height: 112px; }
+
+  .form-submit {
+    width: 100%;
+    background: #c2b067;
+    color: #090e1a;
+    border: none;
+    padding: 0.95rem 2rem;
+    border-radius: 0.75rem;
     font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    margin-top: 0.5rem;
+    transition: background 200ms ease, transform 150ms ease;
   }
-  .t-role {
-    line-height: 1.25;
-    color: #5a5550;
+  .form-submit:hover { background: #d4c280; }
+  .form-submit:active { transform: scale(0.99); }
+  .form-submit:focus-visible {
+    outline: 2px solid #c2b067;
+    outline-offset: 3px;
+    border-radius: 0.75rem;
+  }
+  .form-note {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.3);
+    text-align: center;
+    margin-top: 0.85rem;
+    line-height: 1.5;
+  }
+
+  /* Success state */
+  #form-success {
+    display: none;
+    text-align: center;
+    padding: 3rem 1.5rem;
+  }
+  #form-success.show { display: block; }
+  .success-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(194,176,103,0.14);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+  }
+  .success-title {
+    font-size: 1.35rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 0.6rem;
+  }
+  .success-sub {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.48);
+    line-height: 1.65;
+  }
+
+  /* =========================================================
+     FOOTER
+     ========================================================= */
+  .site-footer {
+    background: #0c1220;
+    padding: 4.5rem 0 0;
+    color: rgba(255,255,255,0.48);
+  }
+
+  .foot-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding-bottom: 3.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  @media (min-width: 640px) { .foot-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .foot-grid { grid-template-columns: 2.2fr 1fr 1fr 1.5fr; gap: 3rem; } }
+
+  .foot-logo { height: 28px; width: auto; margin-bottom: 1rem; opacity: 0.85; }
+
+  .foot-tagline {
     font-size: 0.85rem;
-    letter-spacing: -0.005em;
-    margin-top: 0.15rem;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.38);
+    max-width: 220px;
+    margin-bottom: 1rem;
   }
+  .foot-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.28);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 9999px;
+    padding: 0.25rem 0.75rem;
+    letter-spacing: 0.04em;
+  }
+
+  .foot-col-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.28);
+    margin-bottom: 1.1rem;
+  }
+  .foot-links { display: flex; flex-direction: column; gap: 0.65rem; }
+  .foot-link {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.48);
+    transition: color 200ms ease;
+  }
+  .foot-link:hover { color: #c2b067; }
+  .foot-link:focus-visible {
+    outline: 2px solid #c2b067;
+    outline-offset: 2px;
+    border-radius: 3px;
+  }
+
+  .foot-contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.48);
+    margin-bottom: 0.8rem;
+    line-height: 1.45;
+  }
+  .foot-contact-icon {
+    width: 14px;
+    height: 14px;
+    color: #c2b067;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .foot-contact-link { color: rgba(255,255,255,0.48); transition: color 200ms ease; }
+  .foot-contact-link:hover { color: #c2b067; }
+
+  .foot-bar {
+    padding: 1.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+  @media (min-width: 640px) {
+    .foot-bar { flex-direction: row; justify-content: space-between; align-items: center; }
+  }
+  .foot-copy { font-size: 0.75rem; color: rgba(255,255,255,0.22); }
+  .foot-legal { font-size: 0.75rem; color: rgba(255,255,255,0.22); }
 </style>
 </head>
 
@@ -342,7 +831,7 @@
       </a>
       <div class="hidden md:flex items-center gap-8">
         <a href="#process"   class="text-sm text-white/90 hover:text-gray-300 transition-colors duration-200">Process</a>
-        <a href="#portfolio" class="text-sm text-white/90 hover:text-gray-300 transition-colors duration-200">Portfolio</a>
+        <a href="portfolio.html" class="text-sm text-white/90 hover:text-gray-300 transition-colors duration-200">Portfolio</a>
         <a href="about.html" class="text-sm text-white/90 hover:text-gray-300 transition-colors duration-200">About</a>
         <a href="#contact"   class="text-sm text-white/90 hover:text-gray-300 transition-colors duration-200">Contact</a>
       </div>
@@ -396,26 +885,267 @@
 
 </section>
 
-<!-- ============== TESTIMONIALS ============== -->
-<section id="testimonials" class="testimonials">
-  <div class="t-container">
+<!-- ============== PORTFOLIO PREVIEW ============== -->
+<section id="portfolio">
+  <div class="container">
 
-    <div class="t-header">
-      <span class="t-pill">Testimonials</span>
-      <h2 class="t-title">What our homeowners say</h2>
-      <p class="t-sub">
-        Real conversations from the families who've built with Elevated.
-      </p>
+    <div class="p-header">
+      <span class="p-pill">Our Work</span>
+      <h2 class="p-title">Homes We've Built</h2>
+      <p class="p-sub">Every home is a one-of-a-kind build — crafted to the family, the land, and the life they want to live.</p>
     </div>
 
-    <div class="cols-wrap" aria-label="Client testimonials">
-      <div class="col col-1"><div class="track" data-col="0"></div></div>
-      <div class="col col-2 hide-md"><div class="track" data-col="1"></div></div>
-      <div class="col col-3 hide-lg"><div class="track" data-col="2"></div></div>
+    <div class="cards-grid">
+
+      <!-- The Rose -->
+      <article class="home-card">
+        <div class="card-img-wrap">
+          <img src="Rose.webp" alt="The Rose — custom home in Southern Utah" class="card-photo" loading="lazy">
+          <div class="card-overlay"></div>
+          <div class="card-label">
+            <h3 class="card-name">The Rose</h3>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-specs">
+            <span>4 bed</span>
+            <span class="spec-dot">·</span>
+            <span>3 bath</span>
+            <span class="spec-dot">·</span>
+            <span>2,242 sf</span>
+          </div>
+          <p class="card-garage">3-car garage</p>
+          <div class="card-divider"></div>
+          <a href="the-rose.html" class="card-cta">
+            Learn More
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M7.5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- The Skyline -->
+      <article class="home-card">
+        <div class="card-img-wrap">
+          <img src="Skyline.webp" alt="The Skyline — luxury custom home in Southern Utah" class="card-photo" loading="lazy">
+          <div class="card-overlay"></div>
+          <div class="card-label">
+            <h3 class="card-name">The Skyline</h3>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-specs">
+            <span>5 bed</span>
+            <span class="spec-dot">·</span>
+            <span>6 bath</span>
+            <span class="spec-dot">·</span>
+            <span>5,680 sf</span>
+          </div>
+          <p class="card-garage">3-car garage</p>
+          <div class="card-amenities">
+            <span class="amenity-pill">Pickleball Court</span>
+            <span class="amenity-pill">Sauna</span>
+            <span class="amenity-pill">Gym</span>
+          </div>
+          <div class="card-divider"></div>
+          <a href="the-skyline.html" class="card-cta">
+            Learn More
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M7.5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <!-- The Willow -->
+      <article class="home-card">
+        <div class="card-img-wrap">
+          <img src="Willow.webp" alt="The Willow — custom home in Southern Utah" class="card-photo" loading="lazy">
+          <div class="card-overlay"></div>
+          <div class="card-label">
+            <h3 class="card-name">The Willow</h3>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="card-specs">
+            <span>3 bed</span>
+            <span class="spec-dot">·</span>
+            <span>2 bath</span>
+            <span class="spec-dot">·</span>
+            <span>2,500 sf</span>
+          </div>
+          <p class="card-garage">2-car + RV garage</p>
+          <div class="card-divider"></div>
+          <a href="the-willow.html" class="card-cta">
+            Learn More
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M7.5 3l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="portfolio-footer">
+      <a href="portfolio.html" class="see-all-btn">
+        See All Our Work
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M3 8h10M8.5 3.5l4.5 4.5-4.5 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
     </div>
 
   </div>
 </section>
+
+<!-- ============== TESTIMONIALS ============== -->
+<section id="testimonials" class="testimonials">
+  <div class="container">
+    <div class="t-grid" id="t-grid">
+
+      <!-- Left: heading + navigation dots -->
+      <div class="t-left">
+        <span class="t-pill">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Testimonials
+        </span>
+        <h2 class="t-title">What our homeowners say</h2>
+        <p class="t-sub">Real conversations from the families who've built with Elevated.</p>
+        <div class="t-dots" id="t-dots" role="group" aria-label="Testimonial navigation"></div>
+      </div>
+
+      <!-- Right: animated card stage -->
+      <div class="t-stage" id="t-stage" aria-live="polite">
+        <div class="t-deco-br" aria-hidden="true"></div>
+        <div class="t-deco-tl" aria-hidden="true"></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============== CONTACT ============== -->
+<section id="contact">
+  <div class="container">
+    <div class="c-grid">
+
+      <!-- Left: heading + trust signals -->
+      <div>
+        <span class="c-pill">Get in Touch</span>
+        <h2 class="c-title">Let's build something worth keeping.</h2>
+        <p class="c-sub">Tell us about your vision and we'll reach out within one business day to talk through what's possible.</p>
+        <div class="c-trust">
+          <div class="c-trust-item"><span class="c-trust-dot"></span>Licensed General Contractor — Southern Utah</div>
+          <div class="c-trust-item"><span class="c-trust-dot"></span>Family-owned and operated</div>
+          <div class="c-trust-item"><span class="c-trust-dot"></span>Zero-surprise pricing — detailed contracts, clear budgets</div>
+          <div class="c-trust-item"><span class="c-trust-dot"></span>Real schedules with real accountability</div>
+          <div class="c-trust-item"><span class="c-trust-dot"></span>Continued support long after move-in day</div>
+        </div>
+      </div>
+
+      <!-- Right: form -->
+      <div class="c-form-wrap">
+        <div id="form-fields">
+          <!-- Replace action with your Formspree endpoint or Netlify form handler -->
+          <form id="contact-form" novalidate>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="form-label" for="cf-name">Full Name <span>*</span></label>
+                <input class="form-input" type="text" id="cf-name" name="name" placeholder="Jane Smith" required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="cf-phone">Phone <span>*</span></label>
+                <input class="form-input" type="tel" id="cf-phone" name="phone" placeholder="(435) 555-0100" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cf-email">Email Address <span>*</span></label>
+              <input class="form-input" type="email" id="cf-email" name="email" placeholder="jane@example.com" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cf-land">Do you already have land?</label>
+              <select class="form-select" id="cf-land" name="land">
+                <option value="" disabled selected>Select an option</option>
+                <option value="yes">Yes — I have a lot or parcel</option>
+                <option value="no">No — still need to find land</option>
+                <option value="looking">Actively looking right now</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cf-message">Tell us about your vision</label>
+              <textarea class="form-textarea" id="cf-message" name="message" placeholder="Square footage, style, must-haves, timeline — anything helps us prepare for the conversation."></textarea>
+            </div>
+            <button type="submit" class="form-submit">Send My Request</button>
+            <p class="form-note">No spam, ever. We'll only contact you about your build.</p>
+          </form>
+        </div>
+        <div id="form-success">
+          <div class="success-icon">
+            <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+              <path d="M5 13l5.5 5.5L21 7" stroke="#c2b067" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p class="success-title">Request received — thank you.</p>
+          <p class="success-sub">We'll be in touch within one business day to talk through your project.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============== FOOTER ============== -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="foot-grid">
+
+      <!-- Brand -->
+      <div>
+        <img src="elevated-custom-homes-logo-gold-2.svg" alt="Elevated Custom Homes" class="foot-logo">
+        <p class="foot-tagline">Designing and building one-of-a-kind custom homes across Southern Utah since day one.</p>
+        <span class="foot-badge">Licensed General Contractor</span>
+      </div>
+
+      <!-- Navigation -->
+      <div>
+        <p class="foot-col-label">Pages</p>
+        <div class="foot-links">
+          <a href="index.html" class="foot-link">Home</a>
+          <a href="portfolio.html" class="foot-link">Portfolio</a>
+          <a href="about.html" class="foot-link">About</a>
+          <a href="#contact" class="foot-link">Contact</a>
+        </div>
+      </div>
+
+      <!-- Homes -->
+      <div>
+        <p class="foot-col-label">Our Homes</p>
+        <div class="foot-links">
+          <a href="the-rose.html" class="foot-link">The Rose</a>
+          <a href="the-skyline.html" class="foot-link">The Skyline</a>
+          <a href="the-willow.html" class="foot-link">The Willow</a>
+        </div>
+      </div>
+
+      <!-- Contact info -->
+      <div>
+        <p class="foot-col-label">Contact</p>
+        <div class="foot-contact-item">
+          <svg class="foot-contact-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11 19.79 19.79 0 01.05 2.38 2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a href="tel:+14350000000" class="foot-contact-link">(435) 000-0000</a>
+        </div>
+        <div class="foot-contact-item">
+          <svg class="foot-contact-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><polyline points="22,6 12,13 2,6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a href="mailto:hello@elevatedcustomhomes.com" class="foot-contact-link">hello@elevatedcustomhomes.com</a>
+        </div>
+        <div class="foot-contact-item">
+          <svg class="foot-contact-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/></svg>
+          Cedar City, Utah<br><span style="font-size:0.78rem;color:rgba(255,255,255,0.3);">Serving Iron County &amp; Washington County</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="foot-bar">
+      <span class="foot-copy">&copy; 2025 Elevated Custom Homes. All rights reserved.</span>
+      <span class="foot-legal">Licensed General Contractor — State of Utah</span>
+    </div>
+  </div>
+</footer>
 
 <script>
 (function () {
@@ -451,96 +1181,127 @@
   setTimeout(function () { document.getElementById('hero-buttons').classList.add('show'); }, 1200);
   setTimeout(function () { document.getElementById('hero-tag').classList.add('show'); }, 1400);
 
-  // ===== Testimonials: render 3 columns × (3 unique × 2 copies) for seamless scroll =====
-  const testimonials = [
+  // ===== Testimonials: animated two-column with auto-rotate =====
+  var tData = [
     {
-      text: "Elevated took our vision and delivered something more thoughtful than we imagined. They treated our home like it was their own.",
-      image: "https://randomuser.me/api/portraits/women/12.jpg",
-      name: "Sarah Andersen",
-      role: "Homeowner — Cedar City, UT",
+      name: 'Janice Niblack',
+      location: 'Cedar City, UT',
+      avatar: 'https://randomuser.me/api/portraits/women/55.jpg',
+      rating: 5,
+      text: 'Dalton & his team were very accommodating with FaceTime calls and keeping me updated. The home is absolutely perfect for my dad & the quality is top notch. Even after the build was done, Dalton has continued to show his dedication to his customers by helping my dad with explaining how things work — and being there for him when he has questions. I highly recommend Dalton Hunt with Elevated Custom Homes.',
     },
     {
-      text: "Brian's team returned every call — Saturday afternoons, Tuesday mornings. That kind of communication is rare in this industry.",
-      image: "https://randomuser.me/api/portraits/women/22.jpg",
-      name: "Jenna Holloway",
-      role: "Homeowner — St. George, UT",
+      name: 'Kerrie Taylor',
+      location: 'Cedar City, UT',
+      avatar: 'https://randomuser.me/api/portraits/women/28.jpg',
+      rating: 5,
+      text: 'From day one, Dalton was incredibly easy to work with — a collaborative partner and a client-focused builder. We had zero surprises on price; he built a budget with us and stuck to it. Always available, always on schedule, and he finished our home earlier than expected. The quality of workmanship was outstanding, and any issues after move-in were addressed quickly. An absolute pleasure to work with.',
     },
     {
-      text: "The craftsmanship is what sells you. The relationship is what keeps you recommending them. Two years in and we still text Brian when something needs a touch-up.",
-      image: "https://randomuser.me/api/portraits/men/32.jpg",
-      name: "David Wright",
-      role: "Homeowner — Hurricane, UT",
-    },
-    {
-      text: "We brought a folder full of Pinterest screenshots. They brought back a finished home that felt like it had always been ours.",
-      image: "https://randomuser.me/api/portraits/women/42.jpg",
-      name: "Rachel Reeves",
-      role: "Homeowner — Kanarraville, UT",
-    },
-    {
-      text: "Every subcontractor who came through the door was respectful and clean. That tells you everything about how a builder runs their crews.",
-      image: "https://randomuser.me/api/portraits/men/52.jpg",
-      name: "Mike Thompson",
-      role: "Architect — Cedar City, UT",
-    },
-    {
-      text: "Our budget changed three times because we changed our minds. Each time the team adjusted without drama. We never felt rushed.",
-      image: "https://randomuser.me/api/portraits/women/62.jpg",
-      name: "Olivia Carter",
-      role: "Homeowner — New Harmony, UT",
-    },
-    {
-      text: "Our lot has a tricky slope. Elevated brought in the right engineers early — before any concrete was poured.",
-      image: "https://randomuser.me/api/portraits/men/72.jpg",
-      name: "James Whitaker",
-      role: "Homeowner — Toquerville, UT",
-    },
-    {
-      text: "Walking through our finished home for the first time, my wife cried. That's when you know a builder did right by you.",
-      image: "https://randomuser.me/api/portraits/men/82.jpg",
-      name: "Carlos Mendoza",
-      role: "Homeowner — Enoch, UT",
-    },
-    {
-      text: "Four years and two referrals later, we still get follow-up texts asking how the house is holding up. Small-town values, big-time work.",
-      image: "https://randomuser.me/api/portraits/women/15.jpg",
-      name: "Lauren Reed",
-      role: "Homeowner — Parowan, UT",
+      name: 'Thomas Byars',
+      location: 'Cedar City & Brian Head, UT',
+      avatar: 'https://randomuser.me/api/portraits/men/38.jpg',
+      rating: 5,
+      text: 'I have had the pleasure of using Elevated Custom Homes for my home as well as projects up at Brian Head Resort. I appreciate the attention to detail they provide and the overall experience. The follow up calls to ensure satisfaction has been above and beyond. Thank you!',
     },
   ];
 
-  function escapeHtml(s) {
+  var tActive = 0;
+  var tTimer = null;
+  var tCards, tDots;
+
+  function tEscape(s) {
     return s.replace(/[&<>"']/g, function (c) {
-      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
   }
 
-  function renderCard(t) {
-    return (
-      '<article class="testimonial-card">' +
-        '<p class="t-text">' + escapeHtml(t.text) + '</p>' +
-        '<div class="t-meta">' +
-          '<img class="t-avatar" src="' + t.image + '" alt="' + escapeHtml(t.name) + '" width="40" height="40" loading="lazy">' +
-          '<div>' +
-            '<div class="t-name">' + escapeHtml(t.name) + '</div>' +
-            '<div class="t-role">' + escapeHtml(t.role) + '</div>' +
-          '</div>' +
-        '</div>' +
-      '</article>'
-    );
+  function tStars(n) {
+    var out = '';
+    for (var i = 0; i < n; i++) {
+      out += '<svg class="t-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+    }
+    return out;
   }
 
-  const columns = [
-    testimonials.slice(0, 3),
-    testimonials.slice(3, 6),
-    testimonials.slice(6, 9),
-  ];
-  document.querySelectorAll('.track').forEach(function (track) {
-    const idx = parseInt(track.getAttribute('data-col'), 10);
-    const items = columns[idx] || [];
-    // duplicate the list so the -50% translate produces a seamless loop
-    track.innerHTML = items.concat(items).map(renderCard).join('');
-  });
+  function tBuild() {
+    var stage = document.getElementById('t-stage');
+    var dotsWrap = document.getElementById('t-dots');
+    var decoAnchor = stage.querySelector('.t-deco-br');
+
+    tData.forEach(function (t, idx) {
+      var card = document.createElement('article');
+      card.className = 't-card' + (idx === tActive ? ' active' : '');
+      card.setAttribute('aria-label', 'Testimonial from ' + t.name);
+      card.innerHTML =
+        '<div class="t-stars">' + tStars(t.rating) + '</div>' +
+        '<div class="t-quote-wrap">' +
+          '<svg class="t-quote-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1zm12 0c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>' +
+          '<p class="t-quote-text">' + tEscape(t.text) + '</p>' +
+        '</div>' +
+        '<div class="t-sep"></div>' +
+        '<div class="t-meta">' +
+          '<img class="t-avatar" src="' + t.avatar + '" alt="Photo of ' + tEscape(t.name) + '" width="44" height="44" loading="lazy">' +
+          '<div>' +
+            '<div class="t-name">' + tEscape(t.name) + '</div>' +
+            '<div class="t-role">' + tEscape(t.location) + '</div>' +
+          '</div>' +
+        '</div>';
+      stage.insertBefore(card, decoAnchor);
+
+      var dot = document.createElement('button');
+      dot.className = 't-dot' + (idx === tActive ? ' active' : '');
+      dot.setAttribute('aria-label', 'View testimonial from ' + t.name);
+      (function (i) {
+        dot.addEventListener('click', function () { tGoTo(i); tRestart(); });
+      }(idx));
+      dotsWrap.appendChild(dot);
+    });
+
+    tCards = document.querySelectorAll('.t-card');
+    tDots  = document.querySelectorAll('.t-dot');
+  }
+
+  function tGoTo(idx) {
+    if (tCards[tActive]) tCards[tActive].classList.remove('active');
+    if (tDots[tActive])  tDots[tActive].classList.remove('active');
+    tActive = idx;
+    if (tCards[tActive]) tCards[tActive].classList.add('active');
+    if (tDots[tActive])  tDots[tActive].classList.add('active');
+  }
+
+  function tRestart() {
+    clearInterval(tTimer);
+    tTimer = setInterval(function () { tGoTo((tActive + 1) % tData.length); }, 6000);
+  }
+
+  tBuild();
+  tRestart();
+
+  // Scroll-in animation
+  var tGrid = document.getElementById('t-grid');
+  if (tGrid) {
+    if ('IntersectionObserver' in window) {
+      var tObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { entry.target.classList.add('visible'); tObs.unobserve(entry.target); }
+        });
+      }, { threshold: 0.15 });
+      tObs.observe(tGrid);
+    } else {
+      tGrid.classList.add('visible');
+    }
+  }
+
+  // ===== Contact form: show success state on submit =====
+  var contactForm = document.getElementById('contact-form');
+  if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      document.getElementById('form-fields').style.display = 'none';
+      document.getElementById('form-success').classList.add('show');
+    });
+  }
 })();
 </script>
 

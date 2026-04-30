@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Skyline — Elevated Custom Homes</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        fontFamily: { sans: ['Inter', 'sans-serif'] },
+        colors: { gold: '#c2b067', 'gold-light': '#d4c280' },
+      },
+    },
+  };
+</script>
+
+<style>
+  html, body { background: #1e2840; }
+  body {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    color: #fff;
+  }
+
+  .liquid-glass {
+    background: rgba(30,42,64,0.5);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    box-shadow: inset 0 1px 1px rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  .liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(180deg,
+      rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 20%,
+      rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%,
+      rgba(255,255,255,0.1) 80%, rgba(255,255,255,0.3) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .logo-img { height: 34px; width: auto; display: block; }
+  @media (min-width: 768px) { .logo-img { height: 38px; } }
+
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid #c2b067;
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+
+  .home-hero {
+    position: relative;
+    height: 55vh;
+    min-height: 380px;
+    overflow: hidden;
+  }
+  @media (min-width: 768px) { .home-hero { height: 65vh; } }
+
+  .home-hero-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+  .home-hero-grad {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top,
+      rgba(30,40,64,1) 0%,
+      rgba(30,40,64,0.6) 30%,
+      rgba(30,40,64,0.1) 65%,
+      transparent 100%);
+  }
+  .home-hero-grad-top {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom,
+      rgba(30,40,64,0.55) 0%,
+      transparent 30%);
+  }
+
+  .home-content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem 7rem;
+  }
+  @media (min-width: 768px) { .home-content { padding: 3.5rem 3rem 8rem; } }
+  @media (min-width: 1024px) { .home-content { padding: 4rem 4rem 9rem; } }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 2.5rem;
+    transition: color 200ms ease;
+  }
+  .back-link:hover { color: #c2b067; }
+
+  .home-pill {
+    display: inline-block;
+    padding: 0.3rem 0.9rem;
+    border: 1px solid rgba(194,176,103,0.4);
+    border-radius: 9999px;
+    color: #c2b067;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+  .home-name {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 300;
+    letter-spacing: -0.045em;
+    line-height: 1;
+    margin-bottom: 2.5rem;
+  }
+
+  .specs-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 1rem;
+    overflow: hidden;
+    margin-bottom: 2rem;
+  }
+  .spec-item {
+    flex: 1 1 120px;
+    padding: 1.4rem 1.5rem;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    background: rgba(12,18,32,0.55);
+  }
+  .spec-item:last-child { border-right: none; }
+  .spec-value {
+    font-size: 1.35rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 0.2rem;
+  }
+  .spec-label {
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.42);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .amenity-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 3rem;
+  }
+  .amenity-chip {
+    display: inline-block;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid rgba(194,176,103,0.32);
+    border-radius: 9999px;
+    font-size: 0.78rem;
+    color: #c2b067;
+    letter-spacing: 0.02em;
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-bottom: 1rem;
+    color: rgba(255,255,255,0.9);
+  }
+  .home-desc {
+    font-size: 1rem;
+    line-height: 1.72;
+    color: rgba(255,255,255,0.58);
+    max-width: 600px;
+  }
+
+  .divider {
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    margin: 3rem 0;
+  }
+
+  .cta-strip {
+    padding: 3rem 2.5rem;
+    border: 1px solid rgba(194,176,103,0.18);
+    border-radius: 1.25rem;
+    background: rgba(12,18,32,0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .cta-strip { flex-direction: row; align-items: center; justify-content: space-between; }
+  }
+  .cta-strip-title {
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+  }
+  .cta-strip-sub {
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.48);
+    line-height: 1.55;
+  }
+</style>
+</head>
+
+<body>
+
+<!-- Navbar -->
+<div class="px-6 md:px-12 lg:px-16 pt-6" style="position:relative;z-index:10;">
+  <nav class="liquid-glass rounded-xl px-4 py-2 flex items-center justify-between">
+    <a href="index.html" aria-label="Elevated Custom Homes — home" class="flex items-center">
+      <img src="elevated-custom-homes-logo-gold-2.svg" alt="Elevated Custom Homes" class="logo-img">
+    </a>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="index.html#process" class="text-sm text-white/90 hover:text-gray-300 transition-colors duration-200">Process</a>
+      <a href="portfolio.html"     class="text-sm text-gold font-medium">Portfolio</a>
+      <a href="about.html"         class="text-sm text-white/90 hover:text-gray-300 transition-colors duration-200">About</a>
+      <a href="contact.html" class="text-sm text-white/90 hover:text-gray-300 transition-colors duration-200">Contact</a>
+    </div>
+    <a href="contact.html" class="bg-gold hover:bg-gold-light text-black px-6 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
+      Start Your Build
+    </a>
+  </nav>
+</div>
+
+<!-- Hero image -->
+<div class="home-hero">
+  <img src="Skyline.webp" alt="The Skyline — exterior view" class="home-hero-img">
+  <div class="home-hero-grad-top"></div>
+  <div class="home-hero-grad"></div>
+</div>
+
+<!-- Content -->
+<div class="home-content">
+  <a href="portfolio.html" class="back-link">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    All Homes
+  </a>
+
+  <span class="home-pill">Completed Build</span>
+  <h1 class="home-name">The Skyline</h1>
+
+  <!-- Specs -->
+  <div class="specs-row">
+    <div class="spec-item">
+      <div class="spec-value">5</div>
+      <div class="spec-label">Bedrooms</div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-value">6</div>
+      <div class="spec-label">Bathrooms</div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-value">5,680</div>
+      <div class="spec-label">Square Feet</div>
+    </div>
+    <div class="spec-item">
+      <div class="spec-value">3-Car</div>
+      <div class="spec-label">Garage</div>
+    </div>
+  </div>
+
+  <!-- Amenities -->
+  <div class="amenity-row">
+    <span class="amenity-chip">Pickleball Court</span>
+    <span class="amenity-chip">Sauna</span>
+    <span class="amenity-chip">Private Gym</span>
+  </div>
+
+  <!-- Description -->
+  <p class="section-title">About This Home</p>
+  <p class="home-desc">
+    The Skyline is our flagship luxury build — a 5,680 square foot statement in craftsmanship and intentional living. Soaring ceilings, exposed timber, and natural stone define an interior that commands the Southern Utah landscape without competing with it. The home features a full recreational wing with a regulation-length pickleball court, a private gym, and a sauna — built for a family that takes both work and play seriously. Every detail, from the custom millwork to the six full bathrooms, was executed to a standard that outlasts trends.
+  </p>
+
+  <div class="divider"></div>
+
+  <!-- CTA -->
+  <div class="cta-strip">
+    <div>
+      <p class="cta-strip-title">Want something at this scale?</p>
+      <p class="cta-strip-sub">Let's talk about your vision and what's possible.</p>
+    </div>
+    <a href="contact.html"
+       class="flex-shrink-0 inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-black px-7 py-3 rounded-lg font-medium transition-colors duration-200">
+      Start Your Build
+    </a>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer style="background:#0c1220;padding:4.5rem 0 0;color:rgba(255,255,255,0.48);font-family:'Inter',sans-serif;">
+  <div style="max-width:1200px;margin:0 auto;padding:0 1.5rem;">
+    <div style="display:grid;grid-template-columns:1fr;gap:2.5rem;padding-bottom:3.5rem;border-bottom:1px solid rgba(255,255,255,0.06);">
+      <div>
+        <img src="elevated-custom-homes-logo-gold-2.svg" alt="Elevated Custom Homes" style="height:28px;width:auto;margin-bottom:1rem;opacity:0.85;">
+        <p style="font-size:0.85rem;line-height:1.65;color:rgba(255,255,255,0.38);max-width:220px;margin-bottom:1rem;">Designing and building one-of-a-kind custom homes across Southern Utah since day one.</p>
+        <span style="display:inline-block;font-size:0.7rem;color:rgba(255,255,255,0.28);border:1px solid rgba(255,255,255,0.1);border-radius:9999px;padding:0.25rem 0.75rem;letter-spacing:0.04em;">Licensed General Contractor</span>
+      </div>
+      <div>
+        <p style="font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-bottom:1.1rem;">Pages</p>
+        <div style="display:flex;flex-direction:column;gap:0.65rem;">
+          <a href="index.html" style="font-size:0.875rem;color:rgba(255,255,255,0.48);">Home</a>
+          <a href="portfolio.html" style="font-size:0.875rem;color:rgba(255,255,255,0.48);">Portfolio</a>
+          <a href="about.html" style="font-size:0.875rem;color:rgba(255,255,255,0.48);">About</a>
+          <a href="contact.html" style="font-size:0.875rem;color:rgba(255,255,255,0.48);">Contact</a>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-bottom:1.1rem;">Our Homes</p>
+        <div style="display:flex;flex-direction:column;gap:0.65rem;">
+          <a href="the-rose.html" style="font-size:0.875rem;color:rgba(255,255,255,0.48);">The Rose</a>
+          <a href="the-skyline.html" style="font-size:0.875rem;color:#c2b067;">The Skyline</a>
+          <a href="the-willow.html" style="font-size:0.875rem;color:rgba(255,255,255,0.48);">The Willow</a>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:0.68rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.28);margin-bottom:1.1rem;">Contact</p>
+        <p style="font-size:0.875rem;color:rgba(255,255,255,0.48);margin-bottom:0.6rem;"><a href="tel:+14350000000" style="color:rgba(255,255,255,0.48);">(435) 000-0000</a></p>
+        <p style="font-size:0.875rem;color:rgba(255,255,255,0.48);margin-bottom:0.6rem;"><a href="mailto:hello@elevatedcustomhomes.com" style="color:rgba(255,255,255,0.48);">hello@elevatedcustomhomes.com</a></p>
+        <p style="font-size:0.875rem;color:rgba(255,255,255,0.48);">Cedar City, Utah</p>
+      </div>
+    </div>
+    <div style="padding:1.5rem 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:0.5rem;">
+      <span style="font-size:0.75rem;color:rgba(255,255,255,0.22);">&copy; 2025 Elevated Custom Homes. All rights reserved.</span>
+      <span style="font-size:0.75rem;color:rgba(255,255,255,0.22);">Licensed General Contractor — State of Utah</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
