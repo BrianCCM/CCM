@@ -56,3 +56,4 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Do not stop after one screenshot pass
 - Do not use `transition-all`
 - Do not use default Tailwind blue/indigo as primary color
+- **Never use em-dashes (—) in any copy or content**
