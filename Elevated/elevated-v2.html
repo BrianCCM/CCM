@@ -110,6 +110,7 @@
   /* ===== Animated heading ===== */
   #hero-heading .char {
     display: inline-block;
+    white-space: pre;
     opacity: 0;
     transform: translateX(-18px);
     transition: opacity 500ms cubic-bezier(0.22, 1, 0.36, 1),
@@ -192,93 +193,150 @@
     }
   }
 
-  /* ===== Testimonials (3-col infinite scroll) ===== */
+  /* ===== Testimonials (animated two-column) ===== */
   .testimonials {
     background: #f5efe4;
     color: #1a1a1a;
     padding: 5rem 0 6rem;
     position: relative;
+    overflow: hidden;
   }
   @media (min-width: 1024px) { .testimonials { padding: 7rem 0 8rem; } }
 
-  .t-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
+  .t-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 700ms ease, transform 700ms ease;
   }
-  @media (min-width: 768px) { .t-container { padding: 0 3rem; } }
-  @media (min-width: 1024px) { .t-container { padding: 0 4rem; } }
+  .t-grid.visible { opacity: 1; transform: translateY(0); }
+  @media (min-width: 768px) { .t-grid { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+  @media (min-width: 1024px) { .t-grid { grid-template-columns: 5fr 7fr; gap: 5rem; } }
 
-  .t-header { max-width: 540px; margin: 0 auto; text-align: center; }
   .t-pill {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     padding: 0.35rem 1rem;
-    border: 1px solid rgba(194, 176, 103, 0.5);
+    border: 1px solid rgba(194,176,103,0.5);
     border-radius: 9999px;
     color: #8a7a3d;
     font-size: 0.75rem;
     font-weight: 500;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+    margin-bottom: 1.5rem;
   }
   .t-title {
     font-size: clamp(1.75rem, 4vw, 3rem);
     font-weight: 500;
     letter-spacing: -0.035em;
     line-height: 1.1;
-    margin-top: 1.25rem;
     color: #1a1a1a;
+    margin-bottom: 1rem;
   }
-  .t-sub { margin-top: 1rem; color: #5a5550; font-size: 1rem; line-height: 1.6; }
-
-  .cols-wrap {
-    display: flex;
-    justify-content: center;
-    gap: 1.5rem;
-    margin-top: 3rem;
-    max-height: 720px;
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
-            mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 82%, transparent);
+  .t-sub {
+    color: #5a5550;
+    font-size: 1rem;
+    line-height: 1.65;
+    margin-bottom: 2rem;
   }
-  .col { width: 100%; max-width: 20rem; }
-  .col.hide-md { display: none; }
-  .col.hide-lg { display: none; }
-  @media (min-width: 768px) { .col.hide-md { display: block; } }
-  @media (min-width: 1024px) { .col.hide-lg { display: block; } }
 
-  @keyframes t-scroll { from { transform: translateY(0); } to { transform: translateY(-50%); } }
-  .track {
+  .t-dots { display: flex; align-items: center; gap: 0.6rem; }
+  .t-dot {
+    height: 10px;
+    border-radius: 9999px;
+    background: rgba(26,22,12,0.18);
+    border: none;
+    cursor: pointer;
+    width: 10px;
+    padding: 0;
+    transition: width 320ms ease, background 320ms ease;
+  }
+  .t-dot.active { width: 2.5rem; background: #c2b067; }
+  .t-dot:hover:not(.active) { background: rgba(26,22,12,0.35); }
+  .t-dot:focus-visible { outline: 2px solid #c2b067; outline-offset: 3px; border-radius: 9999px; }
+
+  .t-stage {
+    position: relative;
+    min-height: 370px;
+  }
+  @media (min-width: 1024px) { .t-stage { min-height: 390px; } }
+
+  .t-card {
+    position: absolute;
+    inset: 0;
+    background: #ffffff;
+    border: 1px solid rgba(194,176,103,0.18);
+    border-radius: 1.25rem;
+    padding: 2rem;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
-    padding-bottom: 1.5rem;
-    animation: t-scroll var(--dur, 38s) linear infinite;
-    will-change: transform;
-  }
-  .col-1 .track { --dur: 35s; }
-  .col-2 .track { --dur: 44s; }
-  .col-3 .track { --dur: 39s; }
-  .cols-wrap:hover .track { animation-play-state: paused; }
-  @media (prefers-reduced-motion: reduce) { .track { animation: none; } }
-
-  .testimonial-card {
-    padding: 2rem;
-    border-radius: 1.5rem;
-    background: #ffffff;
-    border: 1px solid rgba(194, 176, 103, 0.18);
     box-shadow:
-      0 1px 2px rgba(26, 22, 12, 0.04),
-      0 12px 28px -16px rgba(194, 176, 103, 0.28);
-    width: 100%;
-    max-width: 20rem;
+      0 1px 2px rgba(26,22,12,0.04),
+      0 16px 40px -12px rgba(194,176,103,0.22);
+    opacity: 0;
+    transform: translateX(36px) scale(0.97);
+    transition: opacity 500ms cubic-bezier(0.22,1,0.36,1),
+                transform 500ms cubic-bezier(0.22,1,0.36,1);
+    pointer-events: none;
   }
-  @media (min-width: 1024px) { .testimonial-card { padding: 2.5rem; } }
-  .t-text { font-size: 0.95rem; line-height: 1.65; color: #2a2622; letter-spacing: -0.005em; }
-  .t-meta { display: flex; align-items: center; gap: 0.65rem; margin-top: 1.25rem; }
-  .t-avatar { width: 2.5rem; height: 2.5rem; border-radius: 9999px; object-fit: cover; flex-shrink: 0; }
-  .t-name { font-weight: 500; letter-spacing: -0.01em; line-height: 1.25; color: #1a1a1a; font-size: 0.95rem; }
-  .t-role { line-height: 1.25; color: #5a5550; font-size: 0.85rem; letter-spacing: -0.005em; margin-top: 0.15rem; }
+  .t-card.active {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+    pointer-events: auto;
+    z-index: 2;
+  }
+
+  .t-stars { display: flex; gap: 0.25rem; margin-bottom: 1.25rem; }
+  .t-star { width: 17px; height: 17px; fill: #c2b067; color: #c2b067; }
+
+  .t-quote-wrap { position: relative; flex: 1; margin-bottom: 1.25rem; }
+  .t-quote-icon {
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    width: 26px;
+    height: 26px;
+    color: rgba(194,176,103,0.25);
+  }
+  .t-quote-text {
+    position: relative;
+    z-index: 1;
+    font-size: 0.94rem;
+    line-height: 1.72;
+    color: #2a2622;
+    letter-spacing: -0.005em;
+    padding-left: 0.25rem;
+  }
+
+  .t-sep { height: 1px; background: rgba(26,22,12,0.08); margin-bottom: 1.25rem; }
+
+  .t-meta { display: flex; align-items: center; gap: 0.75rem; }
+  .t-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 9999px;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid rgba(194,176,103,0.28);
+  }
+  .t-name { font-weight: 500; font-size: 0.9rem; letter-spacing: -0.01em; color: #1a1a1a; line-height: 1.3; }
+  .t-role { font-size: 0.8rem; color: #5a5550; line-height: 1.3; margin-top: 0.1rem; }
+
+  .t-deco-br, .t-deco-tl {
+    position: absolute;
+    width: 72px;
+    height: 72px;
+    border-radius: 0.75rem;
+    background: rgba(194,176,103,0.09);
+    pointer-events: none;
+  }
+  .t-deco-br { bottom: -1.5rem; left: -1.5rem; }
+  .t-deco-tl { top: -1.5rem; right: -1.5rem; }
 
   /* =========================================================
      SHARED CONTAINER
@@ -830,16 +888,26 @@
 
 <!-- ===== TESTIMONIALS ===== -->
 <section id="testimonials" class="testimonials">
-  <div class="t-container">
-    <div class="t-header">
-      <span class="t-pill">Testimonials</span>
-      <h2 class="t-title">What our homeowners say</h2>
-      <p class="t-sub">Real conversations from the families who've built with Elevated.</p>
-    </div>
-    <div class="cols-wrap" aria-label="Client testimonials">
-      <div class="col col-1"><div class="track" data-col="0"></div></div>
-      <div class="col col-2 hide-md"><div class="track" data-col="1"></div></div>
-      <div class="col col-3 hide-lg"><div class="track" data-col="2"></div></div>
+  <div class="container">
+    <div class="t-grid" id="t-grid">
+
+      <!-- Left: heading + navigation dots -->
+      <div class="t-left">
+        <span class="t-pill">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          Testimonials
+        </span>
+        <h2 class="t-title">What our homeowners say</h2>
+        <p class="t-sub">Real conversations from the families who've built with Elevated.</p>
+        <div class="t-dots" id="t-dots" role="group" aria-label="Testimonial navigation"></div>
+      </div>
+
+      <!-- Right: animated card stage -->
+      <div class="t-stage" id="t-stage" aria-live="polite">
+        <div class="t-deco-br" aria-hidden="true"></div>
+        <div class="t-deco-tl" aria-hidden="true"></div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1094,7 +1162,7 @@
     Array.from(line).forEach(function (ch, charIndex) {
       const span = document.createElement('span');
       span.className = 'char';
-      span.textContent = ch === ' ' ? ' ' : ch;
+      span.textContent = ch === ' ' ? ' ' : ch;
       span.style.transitionDelay = ((lineIndex * lineLength * charDelay) + (charIndex * charDelay)) + 'ms';
       lineEl.appendChild(span);
     });
@@ -1109,50 +1177,132 @@
   setTimeout(function () { document.getElementById('hero-buttons').classList.add('show'); }, 1200);
   setTimeout(function () { document.getElementById('hero-tag').classList.add('show'); }, 1400);
 
-  // ===== Testimonials (3-col infinite scroll) =====
-  const testimonials = [
-    { text: "Elevated took our vision and delivered something more thoughtful than we imagined. They treated our home like it was their own.", image: "https://randomuser.me/api/portraits/women/12.jpg", name: "Sarah Andersen", role: "Homeowner, Cedar City, UT" },
-    { text: "Brian's team returned every call, Saturday afternoons, Tuesday mornings. That kind of communication is rare in this industry.", image: "https://randomuser.me/api/portraits/women/22.jpg", name: "Jenna Holloway", role: "Homeowner, St. George, UT" },
-    { text: "The craftsmanship is what sells you. The relationship is what keeps you recommending them. Two years in and we still text Brian when something needs a touch-up.", image: "https://randomuser.me/api/portraits/men/32.jpg", name: "David Wright", role: "Homeowner, Hurricane, UT" },
-    { text: "We brought a folder full of Pinterest screenshots. They brought back a finished home that felt like it had always been ours.", image: "https://randomuser.me/api/portraits/women/42.jpg", name: "Rachel Reeves", role: "Homeowner, Kanarraville, UT" },
-    { text: "Every subcontractor who came through the door was respectful and clean. That tells you everything about how a builder runs their crews.", image: "https://randomuser.me/api/portraits/men/52.jpg", name: "Mike Thompson", role: "Architect, Cedar City, UT" },
-    { text: "Our budget changed three times because we changed our minds. Each time the team adjusted without drama. We never felt rushed.", image: "https://randomuser.me/api/portraits/women/62.jpg", name: "Olivia Carter", role: "Homeowner, New Harmony, UT" },
-    { text: "Our lot has a tricky slope. Elevated brought in the right engineers early, before any concrete was poured.", image: "https://randomuser.me/api/portraits/men/72.jpg", name: "James Whitaker", role: "Homeowner, Toquerville, UT" },
-    { text: "Walking through our finished home for the first time, my wife cried. That's when you know a builder did right by you.", image: "https://randomuser.me/api/portraits/men/82.jpg", name: "Carlos Mendoza", role: "Homeowner, Enoch, UT" },
-    { text: "Four years and two referrals later, we still get follow-up texts asking how the house is holding up. Small-town values, big-time work.", image: "https://randomuser.me/api/portraits/women/15.jpg", name: "Lauren Reed", role: "Homeowner, Parowan, UT" },
+  // ===== Testimonials: animated two-column with auto-rotate =====
+  var tData = [
+    {
+      name: 'Janice Niblack',
+      location: 'Cedar City, UT',
+      avatar: 'https://randomuser.me/api/portraits/women/55.jpg',
+      rating: 5,
+      text: 'Dalton & his team were very accommodating with FaceTime calls and keeping me updated. The home is absolutely perfect for my dad & the quality is top notch. Even after the build was done, Dalton has continued to show his dedication to his customers by helping my dad with explaining how things work, and being there for him when he has questions. I highly recommend Dalton Hunt with Elevated Custom Homes.',
+    },
+    {
+      name: 'Kerrie Taylor',
+      location: 'Cedar City, UT',
+      avatar: 'https://randomuser.me/api/portraits/women/28.jpg',
+      rating: 5,
+      text: 'From day one, Dalton was incredibly easy to work with, a collaborative partner and a client-focused builder. We had zero surprises on price; he built a budget with us and stuck to it. Always available, always on schedule, and he finished our home earlier than expected. The quality of workmanship was outstanding, and any issues after move-in were addressed quickly. An absolute pleasure to work with.',
+    },
+    {
+      name: 'Thomas Byars',
+      location: 'Cedar City & Brian Head, UT',
+      avatar: 'https://randomuser.me/api/portraits/men/38.jpg',
+      rating: 5,
+      text: 'I have had the pleasure of using Elevated Custom Homes for my home as well as projects up at Brian Head Resort. I appreciate the attention to detail they provide and the overall experience. The follow up calls to ensure satisfaction has been above and beyond. Thank you!',
+    },
   ];
 
-  function escapeHtml(s) {
+  var tActive = 0;
+  var tTimer = null;
+  var tCards, tDots;
+
+  function tEscape(s) {
     return s.replace(/[&<>"']/g, function (c) {
-      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
     });
   }
 
-  function renderCard(t) {
-    return (
-      '<article class="testimonial-card">' +
-        '<p class="t-text">' + escapeHtml(t.text) + '</p>' +
-        '<div class="t-meta">' +
-          '<img class="t-avatar" src="' + t.image + '" alt="' + escapeHtml(t.name) + '" width="40" height="40" loading="lazy">' +
-          '<div>' +
-            '<div class="t-name">' + escapeHtml(t.name) + '</div>' +
-            '<div class="t-role">' + escapeHtml(t.role) + '</div>' +
-          '</div>' +
-        '</div>' +
-      '</article>'
-    );
+  function tStars(n) {
+    var out = '';
+    for (var i = 0; i < n; i++) {
+      out += '<svg class="t-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
+    }
+    return out;
   }
 
-  const columns = [
-    testimonials.slice(0, 3),
-    testimonials.slice(3, 6),
-    testimonials.slice(6, 9),
-  ];
-  document.querySelectorAll('.track').forEach(function (track) {
-    const idx = parseInt(track.getAttribute('data-col'), 10);
-    const items = columns[idx] || [];
-    track.innerHTML = items.concat(items).map(renderCard).join('');
-  });
+  function tBuild() {
+    var stage = document.getElementById('t-stage');
+    var dotsWrap = document.getElementById('t-dots');
+    var decoAnchor = stage.querySelector('.t-deco-br');
+
+    tData.forEach(function (t, idx) {
+      var card = document.createElement('article');
+      card.className = 't-card' + (idx === tActive ? ' active' : '');
+      card.setAttribute('aria-label', 'Testimonial from ' + t.name);
+      card.innerHTML =
+        '<div class="t-stars">' + tStars(t.rating) + '</div>' +
+        '<div class="t-quote-wrap">' +
+          '<svg class="t-quote-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1zm12 0c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>' +
+          '<p class="t-quote-text">' + tEscape(t.text) + '</p>' +
+        '</div>' +
+        '<div class="t-sep"></div>' +
+        '<div class="t-meta">' +
+          '<img class="t-avatar" src="' + t.avatar + '" alt="Photo of ' + tEscape(t.name) + '" width="44" height="44" loading="lazy">' +
+          '<div>' +
+            '<div class="t-name">' + tEscape(t.name) + '</div>' +
+            '<div class="t-role">' + tEscape(t.location) + '</div>' +
+          '</div>' +
+        '</div>';
+      stage.insertBefore(card, decoAnchor);
+
+      var dot = document.createElement('button');
+      dot.className = 't-dot' + (idx === tActive ? ' active' : '');
+      dot.setAttribute('aria-label', 'View testimonial from ' + t.name);
+      (function (i) {
+        dot.addEventListener('click', function () { tGoTo(i); tRestart(); });
+      }(idx));
+      dotsWrap.appendChild(dot);
+    });
+
+    tCards = document.querySelectorAll('.t-card');
+    tDots  = document.querySelectorAll('.t-dot');
+  }
+
+  function tGoTo(idx) {
+    if (tCards[tActive]) tCards[tActive].classList.remove('active');
+    if (tDots[tActive])  tDots[tActive].classList.remove('active');
+    tActive = idx;
+    if (tCards[tActive]) tCards[tActive].classList.add('active');
+    if (tDots[tActive])  tDots[tActive].classList.add('active');
+  }
+
+  function tRestart() {
+    clearInterval(tTimer);
+    tTimer = setInterval(function () { tGoTo((tActive + 1) % tData.length); }, 6000);
+  }
+
+  tBuild();
+  tRestart();
+
+  // Touch swipe on the card stage
+  var tStageEl = document.getElementById('t-stage');
+  var tTouchStartX = 0;
+  tStageEl.addEventListener('touchstart', function (e) {
+    tTouchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  tStageEl.addEventListener('touchend', function (e) {
+    var dx = e.changedTouches[0].clientX - tTouchStartX;
+    if (Math.abs(dx) < 40) return;
+    var next = dx < 0
+      ? (tActive + 1) % tData.length
+      : (tActive - 1 + tData.length) % tData.length;
+    tGoTo(next);
+    tRestart();
+  }, { passive: true });
+
+  var tGrid = document.getElementById('t-grid');
+  if (tGrid) {
+    if ('IntersectionObserver' in window) {
+      var tObs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { entry.target.classList.add('visible'); tObs.unobserve(entry.target); }
+        });
+      }, { threshold: 0.15 });
+      tObs.observe(tGrid);
+    } else {
+      tGrid.classList.add('visible');
+    }
+  }
 
   // ===== Contact form: show success state on submit =====
   var contactForm = document.getElementById('contact-form');
