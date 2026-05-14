@@ -1284,8 +1284,8 @@
 
     /* ── Nav services dropdown ── */
     .nav-item-services { position: relative; }
-    .nav-dropdown { display: none; position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%); background: rgba(18,25,31,0.98); backdrop-filter: blur(16px); border: 1px solid rgba(244,237,228,0.1); border-radius: 12px; padding: 0.4rem; list-style: none; margin: 0; min-width: 190px; box-shadow: 0 8px 40px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.2); z-index: 200; }
-    .nav-item-services:hover .nav-dropdown { display: block; }
+    .nav-dropdown { display: none; position: absolute; top: 100%; left: 0; transform: none; margin-top: 0; background: rgba(18,25,31,0.98); backdrop-filter: blur(16px); border: 1px solid rgba(244,237,228,0.1); border-radius: 12px; padding: 0.4rem; list-style: none; margin: 0; min-width: 190px; box-shadow: 0 8px 40px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.2); z-index: 200; }
+    .nav-item-services:hover .nav-dropdown { display: block; } .nav-dropdown::before { content:""; position:absolute; top:-8px; left:0; right:0; height:8px; }
     .nav-dropdown li a { display: block; padding: 0.48rem 0.85rem; border-radius: 6px; color: rgba(244,237,228,0.72); font-family: 'Montserrat',sans-serif; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; white-space: nowrap; transition: background 0.15s ease, color 0.15s ease; }
     .nav-dropdown li a:hover { background: rgba(182,61,43,0.18); color: rgba(244,237,228,0.95); }
     .nav-services-toggle { display: flex !important; align-items: center; gap: 0.35rem; }
@@ -1401,32 +1401,32 @@
 
       <div class="svc-grid fade-up">
 
-        <div class="svc-card">
+        <a href="/get-found" class="svc-card">
           <div class="svc-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
           </div>
           <p class="svc-cat">Discovery</p>
           <h3 class="svc-title">Local SEO</h3>
           <p class="svc-desc">Dominate local search results and Google Maps so customers in your area find you first, every time.</p>
-        </div>
+        </a>
 
-        <div class="svc-card">
+        <a href="/services#social-media" class="svc-card">
           <div class="svc-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
           </div>
           <p class="svc-cat">Engagement</p>
           <h3 class="svc-title">Social Media</h3>
           <p class="svc-desc">Consistent, engaging content that builds community and turns followers into loyal customers for your brand.</p>
-        </div>
+        </a>
 
-        <div class="svc-card">
+        <a href="/get-customers" class="svc-card">
           <div class="svc-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/><line x1="12" y1="2" x2="12" y2="5"/><line x1="12" y1="19" x2="12" y2="22"/><line x1="2" y1="12" x2="5" y2="12"/><line x1="19" y1="12" x2="22" y2="12"/></svg>
           </div>
           <p class="svc-cat">Growth</p>
           <h3 class="svc-title">Paid Ads</h3>
           <p class="svc-desc">Targeted Google and Meta campaigns built for maximum ROI. We focus on results, not just running ads.</p>
-        </div>
+        </a>
 
         <a href="web-design" class="svc-card">
           <div class="svc-icon">
@@ -1438,23 +1438,23 @@
           <span class="svc-link-hint">Learn more <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></span>
         </a>
 
-        <div class="svc-card">
+        <a href="/services#email-marketing" class="svc-card">
           <div class="svc-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
           </div>
           <p class="svc-cat">Retention</p>
           <h3 class="svc-title">Email Marketing</h3>
           <p class="svc-desc">Automated sequences and campaigns that nurture your leads and keep your existing customers coming back.</p>
-        </div>
+        </a>
 
-        <div class="svc-card">
+        <a href="/services#ai-marketing" class="svc-card">
           <div class="svc-icon">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 6v6l4 2"/><path d="M16 2l4 4-4 4"/><path d="M20 2v4h-4"/></svg>
           </div>
           <p class="svc-cat">Innovation</p>
           <h3 class="svc-title">AI Marketing</h3>
           <p class="svc-desc">Leverage AI-powered tools to automate campaigns, predict customer behavior, and personalize outreach at scale.</p>
-        </div>
+        </a>
 
 
       </div>
