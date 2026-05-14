@@ -1274,15 +1274,18 @@
   tBuild();
   tRestart();
 
-  // Touch swipe on the card stage
-  var tStageEl = document.getElementById('t-stage');
+  // Touch swipe across the full testimonials section
+  var tSection = document.getElementById('testimonials');
   var tTouchStartX = 0;
-  tStageEl.addEventListener('touchstart', function (e) {
+  var tTouchStartY = 0;
+  tSection.addEventListener('touchstart', function (e) {
     tTouchStartX = e.touches[0].clientX;
+    tTouchStartY = e.touches[0].clientY;
   }, { passive: true });
-  tStageEl.addEventListener('touchend', function (e) {
+  tSection.addEventListener('touchend', function (e) {
     var dx = e.changedTouches[0].clientX - tTouchStartX;
-    if (Math.abs(dx) < 40) return;
+    var dy = e.changedTouches[0].clientY - tTouchStartY;
+    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
     var next = dx < 0
       ? (tActive + 1) % tData.length
       : (tActive - 1 + tData.length) % tData.length;
