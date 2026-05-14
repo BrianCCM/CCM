@@ -1281,6 +1281,16 @@
       .hero-stats-strip { flex-wrap: wrap; gap: 1rem; }
       .stat-pill { border-right: none; padding: 0 1rem; }
     }
+
+    /* ── Nav services dropdown ── */
+    .nav-item-services { position: relative; }
+    .nav-dropdown { display: none; position: absolute; top: calc(100% + 10px); left: 50%; transform: translateX(-50%); background: rgba(18,25,31,0.98); backdrop-filter: blur(16px); border: 1px solid rgba(244,237,228,0.1); border-radius: 12px; padding: 0.4rem; list-style: none; margin: 0; min-width: 190px; box-shadow: 0 8px 40px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.2); z-index: 200; }
+    .nav-item-services:hover .nav-dropdown { display: block; }
+    .nav-dropdown li a { display: block; padding: 0.48rem 0.85rem; border-radius: 6px; color: rgba(244,237,228,0.72); font-family: 'Montserrat',sans-serif; font-weight: 600; font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; white-space: nowrap; transition: background 0.15s ease, color 0.15s ease; }
+    .nav-dropdown li a:hover { background: rgba(182,61,43,0.18); color: rgba(244,237,228,0.95); }
+    .nav-services-toggle { display: flex !important; align-items: center; gap: 0.35rem; }
+    .nav-caret { transition: transform 0.2s ease; flex-shrink: 0; }
+    .nav-item-services:hover .nav-caret { transform: rotate(180deg); }
   </style>
 </head>
 <body>
@@ -1292,7 +1302,19 @@
         <img src="brand_assets/CCM Logo-4.png" alt="Cedar City Marketing" />
       </a>
       <ul class="nav-links">
-        <li><a href="#services">Services</a></li>
+        <li class="nav-item-services">
+          <a href="/services" class="nav-services-toggle">Services <svg class="nav-caret" width="11" height="7" viewBox="0 0 11 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1,1 5.5,6 10,1"/></svg></a>
+          <ul class="nav-dropdown">
+            <li><a href="/get-found">Local SEO</a></li>
+            <li><a href="/get-customers">Paid Ads</a></li>
+            <li><a href="/get-reviews">Reputation</a></li>
+            <li><a href="/web-design">Web Design</a></li>
+            <li><a href="/services">Social Media</a></li>
+            <li><a href="/services">Email Marketing</a></li>
+            <li><a href="/services">AI Marketing</a></li>
+            <li><a href="/services">Analytics</a></li>
+          </ul>
+        </li>
         <li><a href="#why-us">Why Us</a></li>
         <li><a href="#process">Our Process</a></li>
         <li><a href="book-a-call.html" class="nav-cta">Book a Call</a></li>
@@ -1434,14 +1456,6 @@
           <p class="svc-desc">Leverage AI-powered tools to automate campaigns, predict customer behavior, and personalize outreach at scale.</p>
         </div>
 
-        <div class="svc-card">
-          <div class="svc-icon">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
-          </div>
-          <p class="svc-cat">Insights</p>
-          <h3 class="svc-title">Analytics</h3>
-          <p class="svc-desc">Monthly reporting with plain-English insights. Know exactly what is working and where every dollar goes.</p>
-        </div>
 
       </div>
     </div>
