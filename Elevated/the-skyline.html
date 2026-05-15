@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Skyline | Elevated Custom Homes</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] }, colors: { gold: '#c2b067', 'gold-light': '#d4c280' } } }
+  };
+</script>
+<style>
+  html, body { background: #1a2640; }
+  body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; color: #fff; }
+  .liquid-glass { background: rgba(54,78,126,0.5); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); border: none; box-shadow: inset 0 1px 1px rgba(255,255,255,0.1); position: relative; overflow: hidden; }
+  .liquid-glass::before { content: ''; position: absolute; inset: 0; border-radius: inherit; padding: 1.4px; background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.1) 20%, rgba(255,255,255,0) 40%, rgba(255,255,255,0) 60%, rgba(255,255,255,0.1) 80%, rgba(255,255,255,0.3) 100%); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+  .logo-img { height: 44px; width: auto; display: block; }
+  @media (min-width: 768px) { .logo-img { height: 52px; } }
+  a:focus-visible, button:focus-visible { outline: 2px solid #c2b067; outline-offset: 3px; border-radius: 8px; }
+  .mob-menu { position: fixed; top: 90px; left: 1.5rem; right: 1.5rem; background: #0f1e3a; border: 1px solid rgba(255,255,255,0.1); border-radius: 1rem; padding-bottom: 0.25rem; opacity: 0; visibility: hidden; transform: translateY(-10px) scale(0.98); transition: opacity 220ms ease, transform 280ms cubic-bezier(0.22,1,0.36,1), visibility 0s linear 220ms; pointer-events: none; z-index: 9999; }
+  .mob-menu.open { opacity: 1; visibility: visible; transform: translateY(0) scale(1); transition: opacity 220ms ease, transform 280ms cubic-bezier(0.22,1,0.36,1), visibility 0s linear 0s; pointer-events: auto; }
+  .hamburger { display: flex; flex-direction: column; justify-content: center; gap: 5px; width: 40px; height: 40px; background: none; border: none; cursor: pointer; padding: 8px; border-radius: 8px; flex-shrink: 0; transition: background 200ms ease; }
+  .hamburger:hover { background: rgba(255,255,255,0.08); }
+  .hamburger-line { width: 20px; height: 1.5px; background: #fff; border-radius: 2px; transition: transform 300ms cubic-bezier(0.22,1,0.36,1), opacity 200ms ease; transform-origin: center; }
+  .hamburger.open .hamburger-line:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open .hamburger-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open .hamburger-line:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+  .mob-link { display: block; padding: 0.85rem 1.25rem; font-size: 1rem; color: rgba(255,255,255,0.75); border-radius: 0.6rem; transition: background 150ms ease, color 150ms ease; }
+  .mob-link:hover { background: rgba(255,255,255,0.06); color: #fff; }
+  .mob-cta { display: block; margin: 0.5rem 1.25rem 1.25rem; background: #c2b067; color: #090e1a; text-align: center; padding: 0.85rem; border-radius: 0.75rem; font-size: 0.95rem; font-weight: 600; transition: background 200ms ease; }
+  .mob-cta:hover { background: #d4c280; }
+  .mob-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 0.5rem 1.25rem; }
+  .page-hero { position: relative; min-height: 70vh; display: flex; flex-direction: column; overflow: hidden; }
+  .hero-img-wrap { position: absolute; inset: 0; }
+  .hero-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,25,50,0.95) 0%, rgba(20,32,60,0.60) 45%, rgba(20,32,60,0.35) 100%); }
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  @media (min-width: 768px) { .container { padding: 0 3rem; } }
+  @media (min-width: 1024px) { .container { padding: 0 4rem; } }
+  .pill { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.35rem 1rem; border: 1px solid rgba(194,176,103,0.5); border-radius: 9999px; color: #c2b067; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.25rem; }
+  .details-section { background: #263d68; padding: 5rem 0 6rem; }
+  @media (min-width: 1024px) { .details-section { padding: 7rem 0 8rem; } }
+  .spec-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-bottom: 3rem; }
+  @media (min-width: 640px) { .spec-grid { grid-template-columns: repeat(4, 1fr); } }
+  .spec-card { background: rgba(18,34,62,0.8); border: 1px solid rgba(194,176,103,0.14); border-radius: 1rem; padding: 1.5rem 1.25rem; text-align: center; }
+  .spec-value { font-size: 1.6rem; font-weight: 300; letter-spacing: -0.03em; color: #c2b067; line-height: 1; margin-bottom: 0.4rem; }
+  .spec-label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.42); }
+  .desc-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; align-items: start; }
+  @media (min-width: 768px) { .desc-grid { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+  .amenity-list { display: flex; flex-direction: column; gap: 0.7rem; }
+  .amenity-item { display: flex; align-items: center; gap: 0.65rem; font-size: 0.9rem; color: rgba(255,255,255,0.65); }
+  .amenity-dot { width: 5px; height: 5px; border-radius: 50%; background: #c2b067; flex-shrink: 0; }
+  @property --btn-angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+  @keyframes spin-btn { to { --btn-angle: 360deg; } }
+  .gradient-btn { display: inline-flex; align-items: center; justify-content: center; position: relative; border-radius: 50px; padding: 5px; cursor: pointer; text-decoration: none; background: conic-gradient(from var(--btn-angle) at 50% 50%, #c2b067 0%, #3c4f73 25%, #d4c280 50%, #2a3854 75%, #c2b067 100%); animation: spin-btn 3s linear infinite; box-shadow: 0 0 22px rgba(194,176,103,0.40), 0 0 50px rgba(194,176,103,0.18); transition: box-shadow 300ms ease, transform 300ms cubic-bezier(0.22,1,0.36,1); }
+  .gradient-btn:hover { box-shadow: 0 0 36px rgba(194,176,103,0.65), 0 0 80px rgba(194,176,103,0.28); transform: translateY(-2px); }
+  .gradient-btn-inner { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; background: #1a2640; border-radius: 45px; padding: 1rem 3rem; color: #fff; font-size: 1.05rem; font-weight: 500; letter-spacing: 0.02em; white-space: nowrap; transition: background 300ms ease; }
+  .gradient-btn:hover .gradient-btn-inner { background: #1e2e4e; }
+  .site-footer { background: #162844; padding: 4.5rem 0 0; color: rgba(255,255,255,0.48); }
+  .foot-grid { display: grid; grid-template-columns: 1fr; gap: 2.5rem; padding-bottom: 3.5rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  @media (min-width: 640px) { .foot-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (min-width: 1024px) { .foot-grid { grid-template-columns: 2.2fr 1fr 1fr 1.5fr; gap: 3rem; } }
+  .foot-logo { height: 28px; width: auto; margin-bottom: 1rem; opacity: 0.85; }
+  .foot-tagline { font-size: 0.85rem; line-height: 1.65; color: rgba(255,255,255,0.38); max-width: 220px; margin-bottom: 1rem; }
+  .foot-badge { display: inline-block; font-size: 0.7rem; color: rgba(255,255,255,0.28); border: 1px solid rgba(255,255,255,0.1); border-radius: 9999px; padding: 0.25rem 0.75rem; letter-spacing: 0.04em; }
+  .foot-col-label { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 1.1rem; }
+  .foot-links { display: flex; flex-direction: column; gap: 0.65rem; }
+  .foot-link { font-size: 0.875rem; color: rgba(255,255,255,0.48); transition: color 200ms ease; }
+  .foot-link:hover { color: #c2b067; }
+  .foot-contact-item { display: flex; align-items: flex-start; gap: 0.6rem; font-size: 0.875rem; color: rgba(255,255,255,0.48); margin-bottom: 0.8rem; line-height: 1.45; }
+  .foot-contact-icon { width: 14px; height: 14px; color: #c2b067; flex-shrink: 0; margin-top: 2px; }
+  .foot-contact-link { color: rgba(255,255,255,0.48); transition: color 200ms ease; }
+  .foot-contact-link:hover { color: #c2b067; }
+  .foot-bar { padding: 1.5rem 0; display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+  @media (min-width: 640px) { .foot-bar { flex-direction: row; justify-content: space-between; align-items: center; } }
+  .foot-copy { font-size: 0.75rem; color: rgba(255,255,255,0.22); }
+</style>
+</head>
+<body class="text-white">
+
+<section class="page-hero">
+  <div class="hero-img-wrap" aria-hidden="true"><img src="Skyline.webp" alt="The Skyline"></div>
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="relative z-10 px-6 md:px-12 lg:px-16 pt-6" style="position:relative;">
+    <nav class="liquid-glass rounded-xl px-4 py-2 flex items-center justify-between">
+      <a href="index.html" aria-label="Elevated Custom Homes" class="flex items-center"><img src="elevated-custom-homes-logo-gold-2.svg" alt="Elevated Custom Homes" class="logo-img"></a>
+      <div class="hidden md:flex items-center gap-8">
+        <a href="index.html#portfolio" class="text-sm text-white/90 hover:text-white transition-colors duration-200">Portfolio</a>
+        <a href="team.html"            class="text-sm text-white/90 hover:text-white transition-colors duration-200">Meet Your Team</a>
+        <a href="index.html#contact"   class="text-sm text-white/90 hover:text-white transition-colors duration-200">Contact</a>
+      </div>
+      <a href="index.html#contact" class="hidden md:inline-flex bg-gold hover:bg-gold-light text-black px-6 py-2 rounded-lg text-sm font-medium transition-colors duration-200">Book a Free Call</a>
+      <button class="hamburger md:hidden" id="mob-toggle" aria-label="Open menu" aria-expanded="false">
+        <span class="hamburger-line"></span><span class="hamburger-line"></span><span class="hamburger-line"></span>
+      </button>
+    </nav>
+    <div class="mob-menu" id="mob-menu" aria-hidden="true">
+      <div style="padding:0.75rem 0.5rem 0;">
+        <a href="index.html#portfolio" class="mob-link">Portfolio</a>
+        <a href="team.html"            class="mob-link">Meet Your Team</a>
+        <a href="index.html#contact"   class="mob-link">Contact</a>
+      </div>
+      <div class="mob-divider"></div>
+      <a href="index.html#contact" class="mob-cta">Book a Free Call</a>
+    </div>
+  </div>
+  <div class="relative z-10 flex-1 flex flex-col justify-end px-6 md:px-12 lg:px-16 pb-16">
+    <span class="pill">Our Homes</span>
+    <h1 class="text-5xl md:text-6xl lg:text-7xl font-normal mb-4" style="letter-spacing:-0.04em; line-height:1.05;">The Skyline</h1>
+    <p class="text-lg text-white/65 max-w-lg" style="line-height:1.65;">A landmark estate built for families who want to live without limits. Five bedrooms, six baths, and amenities that make every day extraordinary.</p>
+  </div>
+</section>
+
+<section class="details-section">
+  <div class="container">
+    <div class="spec-grid">
+      <div class="spec-card"><div class="spec-value">5</div><div class="spec-label">Bedrooms</div></div>
+      <div class="spec-card"><div class="spec-value">6</div><div class="spec-label">Bathrooms</div></div>
+      <div class="spec-card"><div class="spec-value">5,680</div><div class="spec-label">Square Feet</div></div>
+      <div class="spec-card"><div class="spec-value">3</div><div class="spec-label">Car Garage</div></div>
+    </div>
+    <div class="desc-grid">
+      <div>
+        <span class="pill">About This Home</span>
+        <h2 class="text-3xl md:text-4xl font-normal mb-5" style="letter-spacing:-0.03em; line-height:1.1;">Built to impress. Designed to live in.</h2>
+        <p class="text-white/55 mb-4" style="line-height:1.72; font-size:0.95rem;">The Skyline is our flagship estate build. At 5,680 square feet, it offers a full suite of luxury amenities, a soaring open floor plan, and finishes that set a new standard for Southern Utah custom homes.</p>
+        <p class="text-white/55" style="line-height:1.72; font-size:0.95rem;">From the private sauna to the full gym and pickleball court, The Skyline is a home designed around how you want to live.</p>
+      </div>
+      <div>
+        <span class="pill">What's Included</span>
+        <div class="amenity-list">
+          <div class="amenity-item"><span class="amenity-dot"></span>Indoor pickleball court</div>
+          <div class="amenity-item"><span class="amenity-dot"></span>Private sauna</div>
+          <div class="amenity-item"><span class="amenity-dot"></span>Full home gym</div>
+          <div class="amenity-item"><span class="amenity-dot"></span>3-car garage</div>
+          <div class="amenity-item"><span class="amenity-dot"></span>Gourmet chef's kitchen</div>
+          <div class="amenity-item"><span class="amenity-dot"></span>Primary suite with spa bath</div>
+          <div class="amenity-item"><span class="amenity-dot"></span>Theater room</div>
+          <div class="amenity-item"><span class="amenity-dot"></span>Outdoor entertaining area</div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-16">
+      <p class="text-white/45 mb-8" style="font-size:0.95rem;">Ready to build something this exceptional? Let's start the conversation.</p>
+      <a href="index.html#contact" class="gradient-btn"><span class="gradient-btn-inner">Book a Free Call</span></a>
+    </div>
+  </div>
+</section>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <img src="elevated-custom-homes-logo-gold-2.svg" alt="Elevated Custom Homes" class="foot-logo">
+        <p class="foot-tagline">Designing and building one-of-a-kind custom homes across Southern Utah since day one.</p>
+        <span class="foot-badge">Licensed General Contractor</span>
+      </div>
+      <div>
+        <p class="foot-col-label">Pages</p>
+        <div class="foot-links">
+          <a href="index.html" class="foot-link">Home</a>
+          <a href="index.html#portfolio" class="foot-link">Portfolio</a>
+          <a href="team.html" class="foot-link">Meet Your Team</a>
+          <a href="index.html#contact" class="foot-link">Contact</a>
+        </div>
+      </div>
+      <div>
+        <p class="foot-col-label">Our Homes</p>
+        <div class="foot-links">
+          <a href="the-rose.html" class="foot-link">The Rose</a>
+          <a href="the-skyline.html" class="foot-link">The Skyline</a>
+          <a href="the-willow.html" class="foot-link">The Willow</a>
+        </div>
+      </div>
+      <div>
+        <p class="foot-col-label">Contact</p>
+        <div class="foot-contact-item">
+          <svg class="foot-contact-icon" viewBox="0 0 24 24" fill="none"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11 19.79 19.79 0 01.05 2.38 2 2 0 012 .18h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <a href="tel:+14350000000" class="foot-contact-link">(435) 000-0000</a>
+        </div>
+        <div class="foot-contact-item">
+          <svg class="foot-contact-icon" viewBox="0 0 24 24" fill="none"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span>Cedar City, Utah</span>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bar"><span class="foot-copy">&copy; 2025 Elevated Custom Homes. All rights reserved.</span></div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var mobToggle = document.getElementById('mob-toggle');
+  var mobMenu   = document.getElementById('mob-menu');
+  function mobUpdatePos() { var r = mobToggle.closest('nav').getBoundingClientRect(); mobMenu.style.top = (r.bottom + 8) + 'px'; }
+  function mobClose() { mobToggle.classList.remove('open'); mobToggle.setAttribute('aria-expanded','false'); mobMenu.classList.remove('open'); mobMenu.setAttribute('aria-hidden','true'); }
+  mobToggle.addEventListener('click', function () {
+    var opening = !mobMenu.classList.contains('open');
+    if (opening) { mobUpdatePos(); mobToggle.classList.add('open'); mobToggle.setAttribute('aria-expanded','true'); mobMenu.classList.add('open'); mobMenu.setAttribute('aria-hidden','false'); } else { mobClose(); }
+  });
+  mobMenu.querySelectorAll('a').forEach(function (l) { l.addEventListener('click', mobClose); });
+  document.addEventListener('click', function (e) { if (!mobToggle.contains(e.target) && !mobMenu.contains(e.target)) mobClose(); });
+})();
+</script>
+</body>
+</html>
