@@ -76,6 +76,82 @@
     border-radius: 8px;
   }
 
+  /* ===== Mobile nav ===== */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+    flex-shrink: 0;
+    transition: background 200ms ease;
+  }
+  .hamburger:hover { background: rgba(255,255,255,0.08); }
+  .hamburger-line {
+    width: 20px;
+    height: 1.5px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 300ms cubic-bezier(0.22,1,0.36,1), opacity 200ms ease;
+    transform-origin: center;
+  }
+  .hamburger.open .hamburger-line:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .hamburger.open .hamburger-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .hamburger.open .hamburger-line:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  .mob-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 1.5rem;
+    right: 1.5rem;
+    background: rgba(20, 32, 58, 0.97);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 1rem;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 400ms cubic-bezier(0.22,1,0.36,1), opacity 250ms ease;
+    pointer-events: none;
+    z-index: 50;
+  }
+  .mob-menu.open {
+    max-height: 360px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .mob-link {
+    display: block;
+    padding: 0.85rem 1.25rem;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.75);
+    border-radius: 0.6rem;
+    transition: background 150ms ease, color 150ms ease;
+  }
+  .mob-link:hover { background: rgba(255,255,255,0.06); color: #fff; }
+  .mob-link.active-page { color: #c2b067; }
+  .mob-cta {
+    display: block;
+    margin: 0.5rem 1.25rem 1.25rem;
+    background: #c2b067;
+    color: #090e1a;
+    text-align: center;
+    padding: 0.85rem;
+    border-radius: 0.75rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: background 200ms ease;
+  }
+  .mob-cta:hover { background: #d4c280; }
+  .mob-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 0.5rem 1.25rem; }
+
   .fade-in { opacity: 0; transition: opacity 900ms ease; }
   .fade-in.show { opacity: 1; }
 
@@ -422,7 +498,7 @@
   <div class="hero-overlay" aria-hidden="true"></div>
 
   <!-- Navbar -->
-  <div class="relative z-10 px-6 md:px-12 lg:px-16 pt-6">
+  <div class="relative z-10 px-6 md:px-12 lg:px-16 pt-6" style="position:relative;">
     <nav class="liquid-glass rounded-xl px-4 py-2 flex items-center justify-between">
       <a href="index.html" aria-label="Elevated Custom Homes" class="flex items-center">
         <img src="elevated-custom-homes-logo-gold-2.svg" alt="Elevated Custom Homes" class="logo-img">
@@ -430,13 +506,30 @@
       <div class="hidden md:flex items-center gap-8">
         <a href="index.html#process"   class="text-sm text-white/90 hover:text-white transition-colors duration-200">Process</a>
         <a href="index.html#portfolio" class="text-sm text-white/90 hover:text-white transition-colors duration-200">Portfolio</a>
-        <a href="team.html"            class="text-sm text-white hover:text-white transition-colors duration-200" style="color:#c2b067;">Team</a>
+        <a href="team.html"            class="text-sm text-white/90 hover:text-white transition-colors duration-200" style="color:#c2b067;">Team</a>
         <a href="index.html#contact"   class="text-sm text-white/90 hover:text-white transition-colors duration-200">Contact</a>
       </div>
-      <a href="index.html#contact" class="bg-gold hover:bg-gold-light text-black px-6 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
+      <a href="index.html#contact" class="hidden md:inline-flex bg-gold hover:bg-gold-light text-black px-6 py-2 rounded-lg text-sm font-medium transition-colors duration-200">
         Book a Free Call
       </a>
+      <button class="hamburger md:hidden" id="mob-toggle" aria-label="Open menu" aria-expanded="false">
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+        <span class="hamburger-line"></span>
+      </button>
     </nav>
+
+    <!-- Mobile menu -->
+    <div class="mob-menu" id="mob-menu" aria-hidden="true">
+      <div style="padding: 0.75rem 0.5rem 0;">
+        <a href="index.html#process"   class="mob-link">Process</a>
+        <a href="index.html#portfolio" class="mob-link">Portfolio</a>
+        <a href="team.html"            class="mob-link active-page">Team</a>
+        <a href="index.html#contact"   class="mob-link">Contact</a>
+      </div>
+      <div class="mob-divider"></div>
+      <a href="index.html#contact" class="mob-cta">Book a Free Call</a>
+    </div>
   </div>
 
   <!-- Hero text -->
@@ -630,6 +723,33 @@
   } else {
     cards.forEach(function (card) { card.classList.add('visible'); });
   }
+
+  // Mobile nav toggle
+  var mobToggle = document.getElementById('mob-toggle');
+  var mobMenu   = document.getElementById('mob-menu');
+  function mobClose() {
+    mobToggle.classList.remove('open');
+    mobToggle.setAttribute('aria-expanded', 'false');
+    mobMenu.classList.remove('open');
+    mobMenu.setAttribute('aria-hidden', 'true');
+  }
+  mobToggle.addEventListener('click', function () {
+    var opening = !mobMenu.classList.contains('open');
+    if (opening) {
+      mobToggle.classList.add('open');
+      mobToggle.setAttribute('aria-expanded', 'true');
+      mobMenu.classList.add('open');
+      mobMenu.setAttribute('aria-hidden', 'false');
+    } else {
+      mobClose();
+    }
+  });
+  mobMenu.querySelectorAll('a').forEach(function (link) {
+    link.addEventListener('click', mobClose);
+  });
+  document.addEventListener('click', function (e) {
+    if (!mobToggle.contains(e.target) && !mobMenu.contains(e.target)) mobClose();
+  });
 })();
 </script>
 
