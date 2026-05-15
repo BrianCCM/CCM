@@ -245,18 +245,38 @@
     margin-bottom: 2rem;
   }
 
-  .t-dots { display: flex; align-items: center; gap: 0.6rem; }
+  .t-nav { display: flex; align-items: center; gap: 0.75rem; }
+  .t-arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 9999px;
+    border: 1.5px solid rgba(26,22,12,0.2);
+    background: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1a1a1a;
+    flex-shrink: 0;
+    transition: background 200ms ease, border-color 200ms ease, color 200ms ease;
+    box-shadow: 0 1px 4px rgba(26,22,12,0.08);
+  }
+  .t-arrow:hover { background: #c2b067; border-color: #c2b067; color: #fff; }
+  .t-arrow:active { background: #a89550; border-color: #a89550; }
+  .t-arrow:focus-visible { outline: 2px solid #c2b067; outline-offset: 3px; }
+  .t-arrow svg { width: 16px; height: 16px; }
+  .t-dots { display: flex; align-items: center; gap: 0.5rem; }
   .t-dot {
-    height: 10px;
+    height: 8px;
     border-radius: 9999px;
     background: rgba(26,22,12,0.18);
     border: none;
     cursor: pointer;
-    width: 10px;
+    width: 8px;
     padding: 0;
     transition: width 320ms ease, background 320ms ease;
   }
-  .t-dot.active { width: 2.5rem; background: #c2b067; }
+  .t-dot.active { width: 2rem; background: #c2b067; }
   .t-dot:hover:not(.active) { background: rgba(26,22,12,0.35); }
   .t-dot:focus-visible { outline: 2px solid #c2b067; outline-offset: 3px; border-radius: 9999px; }
 
@@ -899,7 +919,15 @@
         </span>
         <h2 class="t-title">What our homeowners say</h2>
         <p class="t-sub">Real conversations from the families who've built with Elevated.</p>
-        <div class="t-dots" id="t-dots" role="group" aria-label="Testimonial navigation"></div>
+        <div class="t-nav" role="group" aria-label="Testimonial navigation">
+          <button class="t-arrow" id="t-prev" aria-label="Previous testimonial">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+          </button>
+          <div class="t-dots" id="t-dots"></div>
+          <button class="t-arrow" id="t-next" aria-label="Next testimonial">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
       </div>
 
       <!-- Right: animated card stage -->
@@ -1273,6 +1301,13 @@
 
   tBuild();
   tRestart();
+
+  document.getElementById('t-prev').addEventListener('click', function () {
+    tGoTo((tActive - 1 + tData.length) % tData.length); tRestart();
+  });
+  document.getElementById('t-next').addEventListener('click', function () {
+    tGoTo((tActive + 1) % tData.length); tRestart();
+  });
 
   // Touch swipe across the full testimonials section
   var tSection = document.getElementById('testimonials');
