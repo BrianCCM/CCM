@@ -23,6 +23,55 @@
   <meta name="twitter:description" content="Rank higher on Google and get found by local customers in Southern Utah." />
   <meta name="twitter:image" content="https://www.cedarcitymarketing.com/brand_assets/CCM%20Logo-3.png" />
 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How long does it take to see results from local SEO?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Most Cedar City businesses start seeing measurable movement in Google rankings within 60 to 90 days. Full results typically take 4 to 6 months depending on your starting point and how competitive your industry is locally."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is local SEO and how is it different from regular SEO?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Local SEO focuses specifically on ranking your business when people in Cedar City or Southern Utah search for your services — showing up in Google's map pack, local organic results, and Google Business Profile searches. For most local businesses, local SEO drives more relevant traffic than broad SEO."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I rank higher on Google Maps in Cedar City?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Three factors drive Google Maps rankings: a fully optimized Google Business Profile, consistent citations across directories like Yelp and Apple Maps, and a steady stream of genuine customer reviews. Cedar City Marketing handles all three."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How much does local SEO cost in Southern Utah?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Local SEO at Cedar City Marketing is priced at a flat monthly rate with no long-term contracts. Book a free strategy call for a custom quote based on your market and goals."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need a website for local SEO to work?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "A strong Google Business Profile can generate calls and leads without a website, but a properly built website raises your ranking ceiling and adds credibility. We offer standalone SEO and combined web design plus SEO packages."
+        }
+      }
+    ]
+  }
+  </script>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -147,6 +196,26 @@
     .nav-services-toggle { display: flex !important; align-items: center; gap: 0.35rem; }
     .nav-caret { transition: transform 0.2s ease; flex-shrink: 0; }
     .nav-item-services:hover .nav-caret { transform: rotate(180deg); }
+
+    /* ── FAQ Accordion ── */
+    .faq-section { padding: 6rem 2rem; background: var(--sand); }
+    .faq-inner { max-width: 800px; margin: 0 auto; }
+    .faq-item { border-bottom: 1px solid rgba(31,42,48,0.12); }
+    .faq-item:first-of-type { border-top: 1px solid rgba(31,42,48,0.12); }
+    .faq-trigger {
+      width: 100%; background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      padding: 1.5rem 0; text-align: left;
+      font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 1rem;
+      letter-spacing: -0.01em; color: var(--canyon);
+    }
+    .faq-trigger:focus-visible { outline: 2px solid var(--red); outline-offset: 2px; border-radius: 4px; }
+    .faq-trigger:hover { color: var(--red); }
+    .faq-chevron { flex-shrink: 0; color: var(--red); transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+    .faq-body { display: none; padding-bottom: 1.5rem; }
+    .faq-item.open .faq-body { display: block; }
+    .faq-body p { font-size: 0.97rem; line-height: 1.78; color: rgba(31,42,48,0.7); margin: 0; }
   </style>
 </head>
 <body>
@@ -247,6 +316,65 @@
     </div>
   </section>
 
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="faq-inner">
+      <p class="section-label" style="margin-bottom:0.75rem;">Common Questions</p>
+      <h2 class="section-title" style="margin-bottom:3rem;">Local SEO questions,<br /><em style="font-style:normal;color:var(--red);">answered honestly.</em></h2>
+
+      <div class="faq-item">
+        <button class="faq-trigger" aria-expanded="false">
+          How long does it take to see results from local SEO?
+          <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5,8 10,13 15,8"/></svg>
+        </button>
+        <div class="faq-body" role="region">
+          <p>Most Cedar City businesses start seeing measurable movement in Google rankings within 60 to 90 days. Full results — consistent top-3 placement in the map pack and organic results — typically take 4 to 6 months. The timeline depends on your starting point and how competitive your industry is locally.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-trigger" aria-expanded="false">
+          What is local SEO and how is it different from regular SEO?
+          <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5,8 10,13 15,8"/></svg>
+        </button>
+        <div class="faq-body" role="region">
+          <p>Local SEO focuses specifically on ranking your business when people in Cedar City or Southern Utah search for your services. That means showing up in Google's map pack, local organic results, and Google Business Profile searches. Regular SEO targets broader, non-location-specific searches. For most local businesses, local SEO drives more relevant traffic — people who can actually walk through your door.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-trigger" aria-expanded="false">
+          How do I rank higher on Google Maps in Cedar City?
+          <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5,8 10,13 15,8"/></svg>
+        </button>
+        <div class="faq-body" role="region">
+          <p>Three factors drive Google Maps rankings: a fully optimized Google Business Profile (complete info, photos, posts), consistent citations across directories like Yelp, Apple Maps, and local listings, and a steady stream of genuine customer reviews. We handle all three. Most businesses in Cedar City have significant gaps in at least one of these areas — that's usually where we start.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-trigger" aria-expanded="false">
+          How much does local SEO cost in Southern Utah?
+          <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5,8 10,13 15,8"/></svg>
+        </button>
+        <div class="faq-body" role="region">
+          <p>Our local SEO service is priced at a flat monthly rate with no long-term contracts. If we're not generating results for your Cedar City or Southern Utah business, you shouldn't be paying for it. Book a free strategy call and we'll give you a custom quote based on your market and goals.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-trigger" aria-expanded="false">
+          Do I need a website for local SEO to work?
+          <svg class="faq-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="5,8 10,13 15,8"/></svg>
+        </button>
+        <div class="faq-body" role="region">
+          <p>A strong Google Business Profile can generate calls and leads without a website, but a properly built website dramatically raises your ranking ceiling and adds credibility. We offer standalone SEO for businesses without a site, and combined web design plus SEO packages for those ready to build both at once.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
   <section class="cta-band">
     <h2>Ready to start showing up?</h2>
     <p>Book a free strategy call and we'll show you exactly where your business is missing visibility and how to fix it.</p>
@@ -259,6 +387,23 @@
   <footer>
     <p>© 2026 <a href="index.html">Cedar City Marketing</a>. All rights reserved.</p>
   </footer>
+
+  <script>
+    document.querySelectorAll('.faq-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const item = trigger.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.faq-trigger').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          trigger.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  </script>
 
   <script>
     function toggleMenu() {
