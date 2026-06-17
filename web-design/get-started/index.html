@@ -260,6 +260,25 @@
     .form-success h3 { font-size: 1.4rem; font-weight: 900; color: var(--canyon); margin-bottom: 0.75rem; letter-spacing: -0.03em; }
     .form-success p { font-size: 0.95rem; line-height: 1.75; color: rgba(31,42,48,0.6); max-width: 360px; margin: 0 auto; }
   </style>
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QV3VRVFFLL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-QV3VRVFFLL');
+    gtag('config', 'AW-18245739484');
+  </script>
+  <!-- Meta Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+    (window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init','1291450966103691');fbq('track','PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1291450966103691&ev=PageView&noscript=1"/></noscript>
 </head>
 <body>
 
@@ -465,6 +484,8 @@
         if (response.ok) {
           form.style.display = 'none';
           success.style.display = 'block';
+          fbq('track', 'Lead');
+          gtag('event', 'generate_lead', { send_to: ['G-QV3VRVFFLL', 'AW-18245739484'] });
         } else {
           const data = await response.json();
           const msg = data.errors ? data.errors.map(e => e.message).join(', ') : 'Something went wrong. Please try again or email brian@cedarcitymarketing.com.';
