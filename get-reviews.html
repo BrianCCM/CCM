@@ -298,5 +298,19 @@
       Object.assign(links.style, { display: isOpen ? 'none' : 'flex', flexDirection:'column', position:'absolute', top:'96px', left:'0', right:'0', background:'rgba(31,42,48,0.98)', padding:'1.5rem 2rem', gap:'1.25rem', borderBottom:'1px solid rgba(244,237,228,0.1)' });
     }
   </script>
+  <!-- Cookie Notice -->
+  <div id="cookie-bar" style="position:fixed;bottom:0;left:0;right:0;z-index:9999;background:rgba(14,21,25,0.97);border-top:1px solid rgba(221,213,200,0.08);padding:1rem 2rem;display:none;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+    <p style="margin:0;font-family:'Open Sans',sans-serif;font-size:0.85rem;color:rgba(221,213,200,0.65);">This site uses cookies for analytics and advertising. <a href="/privacy-policy" style="color:#B63D2B;">Privacy Policy</a></p>
+    <button id="cookie-ok" style="background:#B63D2B;color:white;border:none;padding:0.45rem 1.1rem;border-radius:5px;cursor:pointer;font-family:'Montserrat',sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:0.05em;white-space:nowrap;">Got it</button>
+  </div>
+  <script>
+    if (!localStorage.getItem('cookie-ok')) {
+      document.getElementById('cookie-bar').style.display = 'flex';
+    }
+    document.getElementById('cookie-ok').addEventListener('click', function() {
+      localStorage.setItem('cookie-ok', '1');
+      document.getElementById('cookie-bar').style.display = 'none';
+    });
+  </script>
 </body>
 </html>
